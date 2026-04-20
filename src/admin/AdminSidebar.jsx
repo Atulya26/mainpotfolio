@@ -5,6 +5,7 @@ import {
   Briefcase, Archive, BookOpen, User, MessageSquare, Image as ImageIcon,
   Zap, Type, ExternalLink, LogOut,
 } from 'lucide-react'
+import { Button } from './components/ui.jsx'
 import { lock } from './lib/auth.js'
 import { useContent } from '../context/ContentContext.jsx'
 
@@ -37,16 +38,23 @@ export default function AdminSidebar({ onLock }) {
   }, {})
 
   return (
-    <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-white/10 bg-[#0c0c10]">
-      <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
+    <aside className="flex w-72 shrink-0 flex-col border-r border-white/10 bg-[#0c0c10]">
+      {/* header */}
+      <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
         <div>
           <p className="text-[10px] uppercase tracking-wider text-white/40 mono-font">Portfolio</p>
           <p className="text-sm font-medium text-white">{content.site.name} Admin</p>
         </div>
-        {dirty && <span className="h-2 w-2 rounded-full bg-[#ff4a1c]" title="Unpublished changes" />}
+        {dirty && (
+          <span className="flex items-center gap-1.5 rounded-full bg-[#ff4a1c]/15 px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#ff4a1c] mono-font">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ff4a1c]" />
+            Unsaved
+          </span>
+        )}
       </div>
 
-      <div className="flex-1 overflow-y-auto admin-scroll p-3">
+      {/* scrollable nav */}
+      <nav className="flex-1 min-h-0 overflow-y-auto admin-scroll p-3">
         {Object.entries(groups).map(([group, items]) => (
           <div key={group} className="mb-4">
             <p className="mb-1 px-2 text-[10px] uppercase tracking-wider text-white/30 mono-font">
@@ -61,40 +69,40 @@ export default function AdminSidebar({ onLock }) {
                   end={it.end}
                   className={({ isActive }) =>
                     cn(
-                      'flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm transition-colors',
+                      'flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors',
                       isActive
                         ? 'bg-white/10 text-white'
                         : 'text-white/60 hover:bg-white/5 hover:text-white',
                     )
                   }
                 >
-                  <Icon className="h-3.5 w-3.5" />
-                  <span>{it.label}</span>
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{it.label}</span>
                 </NavLink>
               )
             })}
           </div>
         ))}
-      </div>
+      </nav>
 
-      <div className="border-t border-white/10 p-3 flex flex-col gap-1">
-        <a
-          href="/"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-white/50 hover:bg-white/5 hover:text-white"
-        >
-          <ExternalLink className="h-3 w-3" /> Open site
+      {/* footer */}
+      <div className="border-t border-white/10 p-3 flex flex-col gap-2 shrink-0">
+        <a href="/" target="_blank" rel="noreferrer" className="inline-block">
+          <Button variant="outline" size="sm" className="w-full justify-start">
+            <ExternalLink className="h-3.5 w-3.5" /> Open site
+          </Button>
         </a>
-        <button
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full justify-start"
           onClick={() => {
             lock()
             onLock?.()
           }}
-          className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-white/50 hover:bg-white/5 hover:text-white"
         >
-          <LogOut className="h-3 w-3" /> Lock admin
-        </button>
+          <LogOut className="h-3.5 w-3.5" /> Lock admin
+        </Button>
       </div>
     </aside>
   )

@@ -87,7 +87,7 @@ export default function Dashboard() {
             </Button>
             {dirty && (
               <Button
-                variant="ghost"
+                variant="outline"
                 onClick={() => {
                   if (confirm('Discard all local changes?')) resetToPublished()
                 }}
