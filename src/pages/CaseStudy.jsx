@@ -16,12 +16,14 @@ export default function CaseStudy() {
   const projects = content.projects
   const project = projects.find((p) => p.slug === slug)
   const root = useRef(null)
+  const blocksRoot = useRef(null)
 
   const blocks = useMemo(() => {
     if (!project) return []
     return project.blocks?.length ? project.blocks : migrateProjectToBlocks(project)
   }, [project])
 
+  // Intro animations (mount-only — these never need to re-measure)
   useEffect(() => {
     if (!project) return
     const ctx = gsap.context(() => {
@@ -36,11 +38,50 @@ export default function CaseStudy() {
           scrollTrigger: { trigger: l, start: 'top 85%' },
         })
       })
-
       gsap.from('.cs__hero-img', { scale: 1.15, duration: 1.6, ease: 'expo.out', delay: 0.2 })
     }, root)
     return () => ctx.revert()
   }, [project?.slug])
+
+  // ---- Refresh orchestrator ----------------------------------------
+  //
+  // Any time the blocks array changes *or* the rendered DOM resizes, we need
+  // to tell ScrollTrigger to re-measure every registered trigger. Scrub-based
+  // blocks (image parallax, pinned horizontal scroll) depend on accurate
+  // start/end positions; without this, adding a block above them bumps their
+  // pin range out of sync.
+  //
+  // We debounce into a single rAF so that a flurry of edits in admin doesn't
+  // hammer refresh() more than once per frame.
+  useEffect(() => {
+    if (!blocksRoot.current) return
+
+    let pending = false
+    const refresh = () => {
+      if (pending) return
+      pending = true
+      requestAnimationFrame(() => {
+        pending = false
+        ScrollTrigger.refresh()
+      })
+    }
+
+    // Refresh right after the effect (covers blocks-change).
+    refresh()
+
+    // Watch the blocks container for any size change — covers image loads,
+    // font swaps, reflows from block edits.
+    const ro = new ResizeObserver(refresh)
+    ro.observe(blocksRoot.current)
+
+    // Images loading in after mount also change layout.
+    const imgs = blocksRoot.current.querySelectorAll('img')
+    imgs.forEach((img) => {
+      if (!img.complete) img.addEventListener('load', refresh, { once: true })
+    })
+
+    return () => ro.disconnect()
+  }, [blocks.length, blocks.map((b) => b.id).join('|')])
 
   if (!project) return <Navigate to="/" replace />
 
@@ -67,7 +108,7 @@ export default function CaseStudy() {
         <img className="cs__hero-img" src={project.cover} alt="" />
       </section>
 
-      <div className="cs__blocks">
+      <div ref={blocksRoot} className="cs__blocks">
         {blocks.map((b) => (
           <BlockRenderer key={b.id} block={b} />
         ))}

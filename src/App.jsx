@@ -12,8 +12,12 @@ import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
 import { useLenis, getLenis } from './lib/useLenis.js'
-import { ContentProvider } from './context/ContentContext.jsx'
+import { ContentProvider, useContent } from './context/ContentContext.jsx'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './styles/components.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const AdminApp = lazy(() => import('./admin/AdminApp.jsx'))
 
@@ -34,6 +38,7 @@ function SiteLayout() {
 
 function PublicSite() {
   useLenis()
+  const { content } = useContent()
   const [loaded, setLoaded] = useState(false)
   const [theme, setTheme] = useState('light')
   const location = useLocation()
@@ -48,16 +53,22 @@ function PublicSite() {
     loaded ? lenis.start() : lenis.stop()
   }, [loaded])
 
+  // Refresh ScrollTrigger when routes change OR content changes (admin edit
+  // via BroadcastChannel reaches a site tab). Debounced to one rAF per frame
+  // so it doesn't thrash during rapid edits.
   useEffect(() => {
-    const t = setTimeout(() => {
-      import('gsap').then(({ default: gsap }) => {
-        import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-          ScrollTrigger.refresh()
-        })
+    let pending = false
+    const refresh = () => {
+      if (pending) return
+      pending = true
+      requestAnimationFrame(() => {
+        pending = false
+        ScrollTrigger.refresh()
       })
-    }, 50)
+    }
+    const t = setTimeout(refresh, 50)
     return () => clearTimeout(t)
-  }, [location.pathname])
+  }, [location.pathname, content])
 
   return (
     <>
