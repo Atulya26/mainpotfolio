@@ -23,7 +23,7 @@ export default function CaseStudy() {
     return project.blocks?.length ? project.blocks : migrateProjectToBlocks(project)
   }, [project])
 
-  // Intro animations (mount-only — these never need to re-measure)
+  // Intro animations — mount-only, never need re-measure.
   useEffect(() => {
     if (!project) return
     const ctx = gsap.context(() => {
@@ -43,45 +43,37 @@ export default function CaseStudy() {
     return () => ctx.revert()
   }, [project?.slug])
 
-  // ---- Refresh orchestrator ----------------------------------------
+  // ---- Refresh strategy ---------------------------------------------
   //
-  // Any time the blocks array changes *or* the rendered DOM resizes, we need
-  // to tell ScrollTrigger to re-measure every registered trigger. Scrub-based
-  // blocks (image parallax, pinned horizontal scroll) depend on accurate
-  // start/end positions; without this, adding a block above them bumps their
-  // pin range out of sync.
+  // Two carefully-scoped one-shot refreshes:
+  //   (a) when the blocks array structure actually changes (id list or count)
+  //   (b) when images inside the blocks area finish loading
   //
-  // We debounce into a single rAF so that a flurry of edits in admin doesn't
-  // hammer refresh() more than once per frame.
+  // NO ResizeObserver — during a pin, GSAP constantly adjusts the layout,
+  // and a RO would re-refresh continuously, killing and rebuilding the pin
+  // state in an infinite loop.
+
+  // (a) Blocks structure changed → one rAF → one refresh.
+  const blockSig = useMemo(() => blocks.map((b) => b.id).join('|'), [blocks])
+  useEffect(() => {
+    const id = requestAnimationFrame(() => ScrollTrigger.refresh())
+    return () => cancelAnimationFrame(id)
+  }, [blockSig])
+
+  // (b) Images inside the blocks area load → refresh once per image.
   useEffect(() => {
     if (!blocksRoot.current) return
-
-    let pending = false
-    const refresh = () => {
-      if (pending) return
-      pending = true
-      requestAnimationFrame(() => {
-        pending = false
-        ScrollTrigger.refresh()
-      })
-    }
-
-    // Refresh right after the effect (covers blocks-change).
-    refresh()
-
-    // Watch the blocks container for any size change — covers image loads,
-    // font swaps, reflows from block edits.
-    const ro = new ResizeObserver(refresh)
-    ro.observe(blocksRoot.current)
-
-    // Images loading in after mount also change layout.
-    const imgs = blocksRoot.current.querySelectorAll('img')
+    const imgs = Array.from(blocksRoot.current.querySelectorAll('img'))
+    const handlers = []
     imgs.forEach((img) => {
-      if (!img.complete) img.addEventListener('load', refresh, { once: true })
+      if (!img.complete) {
+        const fn = () => ScrollTrigger.refresh()
+        img.addEventListener('load', fn, { once: true })
+        handlers.push([img, fn])
+      }
     })
-
-    return () => ro.disconnect()
-  }, [blocks.length, blocks.map((b) => b.id).join('|')])
+    return () => handlers.forEach(([img, fn]) => img.removeEventListener('load', fn))
+  }, [blockSig])
 
   if (!project) return <Navigate to="/" replace />
 

@@ -12,7 +12,7 @@ import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
 import { useLenis, getLenis } from './lib/useLenis.js'
-import { ContentProvider, useContent } from './context/ContentContext.jsx'
+import { ContentProvider } from './context/ContentContext.jsx'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './styles/components.css'
@@ -38,7 +38,6 @@ function SiteLayout() {
 
 function PublicSite() {
   useLenis()
-  const { content } = useContent()
   const [loaded, setLoaded] = useState(false)
   const [theme, setTheme] = useState('light')
   const location = useLocation()
@@ -53,22 +52,14 @@ function PublicSite() {
     loaded ? lenis.start() : lenis.stop()
   }, [loaded])
 
-  // Refresh ScrollTrigger when routes change OR content changes (admin edit
-  // via BroadcastChannel reaches a site tab). Debounced to one rAF per frame
-  // so it doesn't thrash during rapid edits.
+  // Refresh on route change only. Per-page components handle their own
+  // content-driven refreshes (see CaseStudy's blockSig effect). Subscribing
+  // this top-level effect to `content` caused refreshes to fire while a
+  // pinned ScrollTrigger was actively scrubbing, which destabilised the pin.
   useEffect(() => {
-    let pending = false
-    const refresh = () => {
-      if (pending) return
-      pending = true
-      requestAnimationFrame(() => {
-        pending = false
-        ScrollTrigger.refresh()
-      })
-    }
-    const t = setTimeout(refresh, 50)
+    const t = setTimeout(() => ScrollTrigger.refresh(), 50)
     return () => clearTimeout(t)
-  }, [location.pathname, content])
+  }, [location.pathname])
 
   return (
     <>
