@@ -2,15 +2,17 @@ import { useEffect, useRef } from 'react'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { PROJECTS } from '../lib/data.js'
 import { SplitText } from '../sections/splitText.js'
 import Footer from '../components/Footer.jsx'
+import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function CaseStudy() {
   const { slug } = useParams()
-  const project = PROJECTS.find((p) => p.slug === slug)
+  const { content } = useContent()
+  const projects = content.projects
+  const project = projects.find((p) => p.slug === slug)
   const root = useRef(null)
 
   useEffect(() => {
@@ -28,12 +30,7 @@ export default function CaseStudy() {
         })
       })
 
-      gsap.from('.cs__hero-img', {
-        scale: 1.15,
-        duration: 1.6,
-        ease: 'expo.out',
-        delay: 0.2,
-      })
+      gsap.from('.cs__hero-img', { scale: 1.15, duration: 1.6, ease: 'expo.out', delay: 0.2 })
 
       const parImgs = root.current.querySelectorAll('.cs__parallax img')
       parImgs.forEach((img) => {
@@ -53,7 +50,6 @@ export default function CaseStudy() {
         )
       })
 
-      // Horizontal section
       const horiz = root.current.querySelector('.cs__horiz')
       if (horiz) {
         const track = horiz.querySelector('.cs__horiz-track')
@@ -73,20 +69,14 @@ export default function CaseStudy() {
       }
     }, root)
     return () => ctx.revert()
-  }, [project])
+  }, [project?.slug])
 
   if (!project) return <Navigate to="/" replace />
 
-  const idx = PROJECTS.findIndex((p) => p.slug === slug)
-  const next = PROJECTS[(idx + 1) % PROJECTS.length]
-
-  const gallery = [
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1522199710521-72d69614c702?w=1400&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1483389127117-b6a2102724ae?w=1400&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1557821552-17105176677c?w=1400&q=80&auto=format&fit=crop',
-  ]
+  const idx = projects.findIndex((p) => p.slug === slug)
+  const next = projects[(idx + 1) % projects.length]
+  const gallery = project.gallery || []
+  const captions = project.galleryCaptions || []
 
   return (
     <article ref={root} className="cs">
@@ -95,9 +85,7 @@ export default function CaseStudy() {
           <span>{project.index} / Case Study</span>
           <span>{project.year}</span>
         </div>
-        <h1 className="display cs__intro-title" data-split-scroll>
-          {project.title}.
-        </h1>
+        <h1 className="display cs__intro-title" data-split-scroll>{project.title}.</h1>
         <div className="cs__intro-info">
           <div><span className="mono">Client</span><p>{project.client}</p></div>
           <div><span className="mono">Discipline</span><p>{project.category}</p></div>
@@ -111,43 +99,39 @@ export default function CaseStudy() {
       </section>
 
       <section className="cs__context shell">
+        <div><span className="mono">Context</span></div>
         <div>
-          <span className="mono">Context</span>
-        </div>
-        <div>
-          <p className="h2" data-split-scroll>
-            {project.summary}
-          </p>
-          <p className="lede" data-split-scroll>
-            The team came in with fragmented tools and a long list of
-            feature requests. We responded by doing less: a shared
-            language, fewer primitives, and a quieter front door that
-            the product could finally grow around.
-          </p>
+          <p className="h2" data-split-scroll>{project.summary}</p>
+          <p className="lede" data-split-scroll>{project.contextLede}</p>
         </div>
       </section>
 
-      <section className="cs__parallax">
-        <img src={gallery[0]} alt="" />
-      </section>
+      {gallery[0] && (
+        <section className="cs__parallax">
+          <img src={gallery[0]} alt="" />
+        </section>
+      )}
 
-      <section className="cs__pair shell">
-        <figure>
-          <img src={gallery[1]} alt="" />
-          <figcaption className="mono">Fig. 01 — Early sketches, paper ×22</figcaption>
-        </figure>
-        <figure>
-          <img src={gallery[2]} alt="" />
-          <figcaption className="mono">Fig. 02 — Token studies, digital</figcaption>
-        </figure>
-      </section>
+      {(gallery[1] || gallery[2]) && (
+        <section className="cs__pair shell">
+          {gallery[1] && (
+            <figure>
+              <img src={gallery[1]} alt="" />
+              <figcaption className="mono">{captions[0] || ''}</figcaption>
+            </figure>
+          )}
+          {gallery[2] && (
+            <figure>
+              <img src={gallery[2]} alt="" />
+              <figcaption className="mono">{captions[1] || ''}</figcaption>
+            </figure>
+          )}
+        </section>
+      )}
 
       <section className="cs__quote shell">
-        <blockquote data-split-scroll>
-          "They reframed the problem before they touched the pixels —
-          and the product got measurably calmer as a result."
-        </blockquote>
-        <cite className="mono">— Head of Product, {project.client}</cite>
+        <blockquote data-split-scroll>{`"${project.quote.text}"`}</blockquote>
+        <cite className="mono">{project.quote.author}</cite>
       </section>
 
       <section className="cs__horiz">
@@ -156,12 +140,7 @@ export default function CaseStudy() {
             <span className="mono">Process</span>
             <h3 className="h2">Four moves we made.</h3>
           </div>
-          {[
-            { k: 'Listening', v: 'Diary studies with 14 users over three weeks.' },
-            { k: 'Grammar', v: 'A single set of spacing and type tokens.' },
-            { k: 'Flow', v: 'Collapsing four onboarding screens into two.' },
-            { k: 'Polish', v: 'Micro-interactions, 90% at 60fps.' },
-          ].map((m, i) => (
+          {project.process.map((m, i) => (
             <div key={i} className="cs__horiz-card">
               <span className="mono">{String(i + 1).padStart(2, '0')}</span>
               <h4 className="h2">{m.k}</h4>
@@ -171,28 +150,28 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      <section className="cs__full">
-        <img src={gallery[3]} alt="" />
-      </section>
+      {gallery[3] && (
+        <section className="cs__full">
+          <img src={gallery[3]} alt="" />
+        </section>
+      )}
 
       <section className="cs__close shell">
         <div><span className="mono">Outcomes</span></div>
         <div>
-          <p className="lede" data-split-scroll>
-            Activation up 41%, support tickets down 28%, and a team that
-            finally trusts its own component library. The product got
-            simpler; the people, less tired.
-          </p>
+          <p className="lede" data-split-scroll>{project.outcomes}</p>
         </div>
       </section>
 
-      <Link to={`/work/${next.slug}`} className="cs__next" data-cursor="case" data-cursor-label="Next case">
-        <div className="cs__next-inner" style={{ background: next.color, color: next.textOnColor }}>
-          <span className="mono">Next — {next.index}</span>
-          <h3 className="display">{next.client}</h3>
-          <span className="mono">{next.title} ↗</span>
-        </div>
-      </Link>
+      {next && (
+        <Link to={`/work/${next.slug}`} className="cs__next" data-cursor="case" data-cursor-label="Next case">
+          <div className="cs__next-inner" style={{ background: next.color, color: next.textOnColor }}>
+            <span className="mono">Next — {next.index}</span>
+            <h3 className="display">{next.client}</h3>
+            <span className="mono">{next.title} ↗</span>
+          </div>
+        </Link>
+      )}
 
       <Footer />
     </article>

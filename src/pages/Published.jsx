@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { PUBLISHED } from '../lib/data.js'
 import Footer from '../components/Footer.jsx'
+import { useContent } from '../context/ContentContext.jsx'
 
 export default function Published() {
+  const { content } = useContent()
+  const pub = content.published
   const root = useRef(null)
 
   useEffect(() => {
@@ -23,15 +25,12 @@ export default function Published() {
   return (
     <div ref={root} className="pub shell">
       <header className="pub__head">
-        <span className="mono">(03) Published</span>
-        <h1 className="h2">
-          Essays, talks and the odd <br />
-          argument with myself.
-        </h1>
+        <span className="mono">{pub.eyebrow}</span>
+        <h1 className="h2" style={{ whiteSpace: 'pre-line' }}>{pub.heading}</h1>
       </header>
 
       <ul className="pub__list">
-        {PUBLISHED.map((p, i) => (
+        {pub.items.map((p, i) => (
           <li key={i} className="pub__item" data-cursor="link" data-cursor-label="Read">
             <a href="#" className="pub__link">
               <span className="mono pub__num">{String(i + 1).padStart(2, '0')}</span>

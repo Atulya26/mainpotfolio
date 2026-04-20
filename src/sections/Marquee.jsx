@@ -1,40 +1,30 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Marquee() {
+  const { content } = useContent()
+  const words = content.marquee.words
   const track = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const el = track.current
-      // Infinite marquee
-      gsap.to(el, {
-        xPercent: -50,
-        repeat: -1,
-        duration: 40,
-        ease: 'none',
-      })
-      // Scroll-reactive speed-up (skew)
+      gsap.to(el, { xPercent: -50, repeat: -1, duration: 40, ease: 'none' })
       ScrollTrigger.create({
         trigger: el,
         start: 'top bottom',
         end: 'bottom top',
         onUpdate: (self) => {
-          gsap.to(el, {
-            skewX: self.getVelocity() / -400,
-            duration: 0.4,
-            overwrite: 'auto',
-          })
+          gsap.to(el, { skewX: self.getVelocity() / -400, duration: 0.4, overwrite: 'auto' })
         },
       })
     })
     return () => ctx.revert()
-  }, [])
-
-  const words = ['Selected', '2022 — 26', 'Copenhagen', 'Product', 'Brand', 'Interaction']
+  }, [words.join('|')])
 
   return (
     <div className="marquee" aria-hidden>

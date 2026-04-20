@@ -1,18 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
-import { PROJECTS } from '../lib/data.js'
-
-const ITEMS = [
-  { to: '/', label: 'Index', num: '00' },
-  { to: '/', label: 'Selected', num: '01' },
-  { to: '/archive', label: 'Archive', num: '02' },
-  { to: '/published', label: 'Published', num: '03' },
-  { to: '/about', label: 'About', num: '04' },
-  { to: '/contact', label: 'Contact', num: '05' },
-]
+import { useContent } from '../context/ContentContext.jsx'
 
 export default function MenuModal({ open, onClose }) {
+  const { content } = useContent()
+  const items = content.nav.menuItems
+  const featured = content.projects.slice(0, 4)
+  const site = content.site
+  const socials = site.socials
   const root = useRef(null)
   const itemsRef = useRef([])
   const panelRef = useRef(null)
@@ -49,11 +45,11 @@ export default function MenuModal({ open, onClose }) {
       <div ref={panelRef} className="menu__panel">
         <div className="menu__inner">
           <ul className="menu__list">
-            {ITEMS.map((it, i) => (
-              <li key={it.label} className="menu__item">
+            {items.map((it, i) => (
+              <li key={it.label + i} className="menu__item">
                 <div className="reveal menu__reveal">
                   <Link
-                    to={it.to}
+                    to={it.path}
                     onClick={onClose}
                     ref={(el) => (itemsRef.current[i] = el)}
                     className="menu__link"
@@ -71,7 +67,7 @@ export default function MenuModal({ open, onClose }) {
             <div>
               <p className="eyebrow">Featured</p>
               <ul className="menu__featured">
-                {PROJECTS.slice(0, 4).map((p) => (
+                {featured.map((p) => (
                   <li key={p.slug}>
                     <Link to={`/work/${p.slug}`} onClick={onClose} data-cursor="link" data-cursor-label={p.client}>
                       <span className="mono">{p.index}</span>
@@ -84,10 +80,10 @@ export default function MenuModal({ open, onClose }) {
             </div>
             <div className="menu__contact">
               <p className="eyebrow">Elsewhere</p>
-              <a href="mailto:hi@atulya.studio" data-cursor="link">hi@atulya.studio</a>
-              <a href="#" data-cursor="link">LinkedIn ↗</a>
-              <a href="#" data-cursor="link">Read.cv ↗</a>
-              <a href="#" data-cursor="link">Are.na ↗</a>
+              <a href={`mailto:${site.email}`} data-cursor="link">{site.email}</a>
+              {socials.map((s) => (
+                <a key={s.label} href={s.url} data-cursor="link">{s.label}</a>
+              ))}
             </div>
           </aside>
         </div>

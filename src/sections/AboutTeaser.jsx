@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from './splitText.js'
+import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function AboutTeaser() {
+  const { content } = useContent()
+  const at = content.aboutTeaser
   const root = useRef(null)
 
   useEffect(() => {
@@ -19,34 +22,24 @@ export default function AboutTeaser() {
           duration: 0.9,
           ease: 'expo.out',
           stagger: 0.03,
-          scrollTrigger: {
-            trigger: l,
-            start: 'top 85%',
-          },
+          scrollTrigger: { trigger: l, start: 'top 85%' },
         })
       })
     }, root)
     return () => ctx.revert()
-  }, [])
+  }, [at.heading, at.sub])
 
   return (
     <section ref={root} className="about-t">
       <div className="about-t__grid">
         <div className="about-t__col">
-          <span className="mono">(03) About</span>
+          <span className="mono">{at.eyebrow}</span>
         </div>
         <div className="about-t__col about-t__body">
-          <p className="h2" data-split-scroll>
-            I believe good interfaces are the ones you don't notice —
-            the ones that move out of the way so the work can speak.
-          </p>
-          <p className="lede" data-split-scroll>
-            Fifteen years in, I'm still drawn to the small moments: the
-            hover that confirms, the transition that reassures, the
-            line of type that carries a whole brand on its back.
-          </p>
+          <p className="h2" data-split-scroll>{at.heading}</p>
+          <p className="lede" data-split-scroll>{at.sub}</p>
           <Link to="/about" className="about-t__link mono" data-cursor="link" data-cursor-label="Read more">
-            <span>More about me</span>
+            <span>{at.ctaLabel}</span>
             <span>↗</span>
           </Link>
         </div>

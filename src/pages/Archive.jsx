@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { ARCHIVE, PROJECTS } from '../lib/data.js'
 import Footer from '../components/Footer.jsx'
+import { useContent } from '../context/ContentContext.jsx'
 
 export default function Archive() {
+  const { content } = useContent()
+  const arc = content.archive
   const root = useRef(null)
   const [hover, setHover] = useState(null)
   const previewRef = useRef(null)
@@ -33,21 +35,21 @@ export default function Archive() {
   }, [])
 
   const fullList = [
-    ...PROJECTS.map((p) => ({ y: p.year, t: `${p.client} — ${p.title}`, c: p.category, img: p.cover })),
-    ...ARCHIVE,
+    ...content.projects.map((p) => ({
+      y: p.year,
+      t: `${p.client} — ${p.title}`,
+      c: p.category,
+      img: p.cover,
+    })),
+    ...arc.rows,
   ]
 
   return (
     <div ref={root} className="arc shell">
       <header className="arc__head">
-        <span className="mono">(02) Archive</span>
-        <h1 className="h2">
-          Everything else — fifty-six <br />
-          projects, in plain text.
-        </h1>
-        <p className="lede">
-          Shorter notes on shipped work. Hover a row to peek.
-        </p>
+        <span className="mono">{arc.eyebrow}</span>
+        <h1 className="h2" style={{ whiteSpace: 'pre-line' }}>{arc.heading}</h1>
+        <p className="lede">{arc.sub}</p>
       </header>
 
       <div className="arc__table mono">

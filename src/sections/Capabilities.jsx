@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { CAPABILITIES } from '../lib/data.js'
+import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Sticky, cycling capabilities. As you scroll through the section, the big
-// word on the left swaps while the list on the right highlights.
 export default function Capabilities() {
+  const { content } = useContent()
+  const cap = content.capabilitiesSection
+  const items = cap.items
   const root = useRef(null)
   const word = useRef(null)
   const itemsRef = useRef([])
@@ -17,15 +18,12 @@ export default function Capabilities() {
       ScrollTrigger.create({
         trigger: root.current,
         start: 'top top',
-        end: () => `+=${CAPABILITIES.length * 80}%`,
+        end: () => `+=${items.length * 80}%`,
         pin: '.cap__sticky',
         scrub: 0.6,
         onUpdate: (self) => {
-          const i = Math.min(
-            CAPABILITIES.length - 1,
-            Math.floor(self.progress * CAPABILITIES.length),
-          )
-          if (word.current) word.current.textContent = CAPABILITIES[i].k
+          const i = Math.min(items.length - 1, Math.floor(self.progress * items.length))
+          if (word.current) word.current.textContent = items[i].k
           itemsRef.current.forEach((el, idx) => {
             el?.classList.toggle('is-active', idx === i)
           })
@@ -41,21 +39,21 @@ export default function Capabilities() {
       })
     }, root)
     return () => ctx.revert()
-  }, [])
+  }, [items.length, items.map((i) => i.k).join('|')])
 
   return (
     <section ref={root} className="cap">
       <div className="cap__sticky">
         <div className="cap__col">
-          <p className="eyebrow cap__lead">(02) Capabilities</p>
+          <p className="eyebrow cap__lead">{cap.eyebrow}</p>
           <h2 className="display cap__word">
-            <span ref={word}>{CAPABILITIES[0].k}</span>
+            <span ref={word}>{items[0]?.k}</span>
           </h2>
         </div>
         <ul className="cap__list">
-          {CAPABILITIES.map((c, i) => (
+          {items.map((c, i) => (
             <li
-              key={c.k}
+              key={c.k + i}
               ref={(el) => (itemsRef.current[i] = el)}
               className={`cap__item ${i === 0 ? 'is-active' : ''}`}
             >

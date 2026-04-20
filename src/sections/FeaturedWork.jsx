@@ -2,14 +2,17 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { PROJECTS, CATEGORIES } from '../lib/data.js'
+import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function FeaturedWork() {
+  const { content } = useContent()
+  const projects = content.projects
+  const categories = content.categories
   const root = useRef(null)
   const [filter, setFilter] = useState('All')
-  const items = filter === 'All' ? PROJECTS : PROJECTS.filter((p) => p.category === filter)
+  const items = filter === 'All' ? projects : projects.filter((p) => p.category === filter)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,21 +51,19 @@ export default function FeaturedWork() {
       })
     }, root)
     return () => ctx.revert()
-  }, [filter])
+  }, [filter, items.length])
 
   return (
     <section ref={root} className="fw" id="selected">
       <div className="fw__heading">
-        <span className="mono fw__heading-el">(01) Selected works · 2022—26</span>
-        <h2 className="h2 fw__heading-el">
-          A handful of projects I'm still
-          <br />
-          quietly proud of.
+        <span className="mono fw__heading-el">{content.featured.eyebrow}</span>
+        <h2 className="h2 fw__heading-el" style={{ whiteSpace: 'pre-line' }}>
+          {content.featured.heading}
         </h2>
       </div>
 
       <div className="fw__filters mono">
-        {CATEGORIES.map((c) => (
+        {categories.map((c) => (
           <button
             key={c}
             onClick={() => setFilter(c)}
@@ -71,7 +72,7 @@ export default function FeaturedWork() {
           >
             <span>{c}</span>
             <span className="fw__filter-count">
-              {c === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === c).length}
+              {c === 'All' ? projects.length : projects.filter((p) => p.category === c).length}
             </span>
           </button>
         ))}
@@ -115,7 +116,7 @@ export default function FeaturedWork() {
 
       <div className="fw__foot">
         <Link to="/archive" className="fw__all mono" data-cursor="link" data-cursor-label="All work">
-          <span>See full archive (56)</span>
+          <span>{content.featured.ctaLabel}</span>
           <span>↗</span>
         </Link>
       </div>

@@ -1,0 +1,396 @@
+{
+  "site": {
+    "name": "Atulya",
+    "role": "UX/UI & Product Designer",
+    "brandMark": "A.",
+    "brandFull": "Atulya Portfolio",
+    "tagline": "Folio / 2026",
+    "location": "Copenhagen, DK",
+    "timezone": "Europe/Copenhagen",
+    "timezoneLabel": "CPH",
+    "email": "hi@atulya.studio",
+    "phone": "+45 00 00 00 00",
+    "availability": "Available · Autumn 2026",
+    "slotsLeft": "Two slots left",
+    "studio": "Studio — Nørrebro, Copenhagen 2200",
+    "socials": [
+      { "label": "LinkedIn ↗", "url": "#" },
+      { "label": "Read.cv ↗", "url": "#" },
+      { "label": "Are.na ↗", "url": "#" }
+    ],
+    "colophon": "Built with React, GSAP, Lenis. Type in Inter Tight & Instrument Serif.",
+    "copyright": "© 2026 Atulya",
+    "rights": "All projects, unless noted, © their respective owners.",
+    "version": "v. 0.1"
+  },
+
+  "theme": {
+    "accent": "#ff4a1c",
+    "bgLight": "#efece6",
+    "bgAltLight": "#e8e5de",
+    "fgLight": "#17181a",
+    "fgMutedLight": "#6a6a6a",
+    "bgDark": "#0e0e0f",
+    "bgAltDark": "#141416",
+    "fgDark": "#f2efe8",
+    "fgMutedDark": "#9a9a9a",
+    "fontDisplay": "Inter Tight",
+    "fontSerif": "Instrument Serif",
+    "fontMono": "JetBrains Mono"
+  },
+
+  "nav": {
+    "links": [
+      { "num": "01", "label": "Selected", "path": "/", "count": 14 },
+      { "num": "02", "label": "Archive", "path": "/archive", "count": 56 },
+      { "num": "03", "label": "Published", "path": "/published", "count": 17 }
+    ],
+    "menuItems": [
+      { "num": "00", "label": "Index", "path": "/" },
+      { "num": "01", "label": "Selected", "path": "/" },
+      { "num": "02", "label": "Archive", "path": "/archive" },
+      { "num": "03", "label": "Published", "path": "/published" },
+      { "num": "04", "label": "About", "path": "/about" },
+      { "num": "05", "label": "Contact", "path": "/contact" }
+    ]
+  },
+
+  "preloader": {
+    "words": ["Selected", "Work", "Archive", "Published", "Atulya"]
+  },
+
+  "hero": {
+    "metaLeft": "Atulya — Product & Interaction Designer",
+    "metaRight": "Folio / 2026",
+    "titleLines": [
+      "Designing interfaces",
+      "with clarity, craft,",
+      "and a little restraint."
+    ],
+    "mediaSrc": "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?w=1600&q=80&auto=format&fit=crop",
+    "mediaTag": "REEL · 02:14",
+    "asideLede": "Independent designer working between product, brand and interaction. Previously at studios you might know, now shipping small honest things from Copenhagen.",
+    "ticker": ["● Available · Autumn 2026", "● Two slots left"],
+    "scrollHint": "Scroll · Selected work"
+  },
+
+  "marquee": {
+    "words": ["Selected", "2022 — 26", "Copenhagen", "Product", "Brand", "Interaction"]
+  },
+
+  "featured": {
+    "eyebrow": "(01) Selected works · 2022—26",
+    "heading": "A handful of projects I'm still\nquietly proud of.",
+    "ctaLabel": "See full archive (56)"
+  },
+
+  "categories": [
+    "All",
+    "Apps & Web-apps",
+    "Websites",
+    "E-commerce",
+    "Platforms & Systems",
+    "Other"
+  ],
+
+  "projects": [
+    {
+      "slug": "pointvoucher",
+      "index": "01",
+      "title": "Reinventing the Everyday Voucher",
+      "client": "Pointvoucher",
+      "year": "2025",
+      "category": "Apps & Web-apps",
+      "role": ["Product Design", "Interaction", "Design System"],
+      "discipline": "App",
+      "color": "#ff5a1f",
+      "textOnColor": "#0b0b0b",
+      "cover": "https://images.unsplash.com/photo-1522199710521-72d69614c702?w=1600&q=80&auto=format&fit=crop",
+      "summary": "A unified loyalty wallet that turns daily errands into a quiet reward — rebuilt around one tappable card and a light visual grammar.",
+      "contextLede": "The team came in with fragmented tools and a long list of feature requests. We responded by doing less: a shared language, fewer primitives, and a quieter front door that the product could finally grow around.",
+      "gallery": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1522199710521-72d69614c702?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1483389127117-b6a2102724ae?w=1400&q=80&auto=format&fit=crop"
+      ],
+      "galleryCaptions": ["Fig. 01 — Early sketches, paper ×22", "Fig. 02 — Token studies, digital"],
+      "quote": {
+        "text": "They reframed the problem before they touched the pixels — and the product got measurably calmer as a result.",
+        "author": "— Head of Product, Pointvoucher"
+      },
+      "process": [
+        { "k": "Listening", "v": "Diary studies with 14 users over three weeks." },
+        { "k": "Grammar", "v": "A single set of spacing and type tokens." },
+        { "k": "Flow", "v": "Collapsing four onboarding screens into two." },
+        { "k": "Polish", "v": "Micro-interactions, 90% at 60fps." }
+      ],
+      "outcomes": "Activation up 41%, support tickets down 28%, and a team that finally trusts its own component library. The product got simpler; the people, less tired."
+    },
+    {
+      "slug": "rasmus-noah-hansen",
+      "index": "02",
+      "title": "Shaping a Voice Worth Hearing",
+      "client": "Rasmus Noah Hansen",
+      "year": "2024",
+      "category": "Websites",
+      "role": ["Brand", "Art Direction", "Webflow"],
+      "discipline": "Site",
+      "color": "#1d2b2a",
+      "textOnColor": "#efece6",
+      "cover": "https://images.unsplash.com/photo-1531404610614-68f9e73e35db?w=1600&q=80&auto=format&fit=crop",
+      "summary": "A quiet editorial site for a composer — typography doing the heavy lifting, sound sitting comfortably beside the image.",
+      "contextLede": "Voice-first design for a classical composer. We set the type first, then asked what sound would earn a place on the same page.",
+      "gallery": [
+        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1400&q=80&auto=format&fit=crop"
+      ],
+      "galleryCaptions": ["Fig. 01 — Type studies", "Fig. 02 — Sound + image pairings"],
+      "quote": {
+        "text": "He gave me an internet that finally felt like mine — patient, legible, and quiet.",
+        "author": "— Rasmus Noah Hansen"
+      },
+      "process": [
+        { "k": "Listening", "v": "Three conversations, one studio visit, two tea breaks." },
+        { "k": "Type", "v": "Setting a voice on the page before touching layout." },
+        { "k": "Sound", "v": "Hover audio peeks; no autoplay, ever." },
+        { "k": "Restraint", "v": "Removing two nav items and one hero video." }
+      ],
+      "outcomes": "Bounce rate down, session time doubled, and a composer who is finally proud to share his own URL."
+    },
+    {
+      "slug": "recommendating",
+      "index": "03",
+      "title": "Love, Endorsed by your Inner Circle",
+      "client": "Recommendating",
+      "year": "2025",
+      "category": "Apps & Web-apps",
+      "role": ["Product Design", "Prototyping"],
+      "discipline": "App",
+      "color": "#efd9c4",
+      "textOnColor": "#1a1a1a",
+      "cover": "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?w=1600&q=80&auto=format&fit=crop",
+      "summary": "A dating concept built on trust — friends introduce friends. Warm, tactile, and deliberately slow.",
+      "contextLede": "We designed a dating app that made speed feel undignified. Everything in it is a trade: your attention for your friends' care.",
+      "gallery": [
+        "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1494368308039-ed3393a402a4?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1509223197845-458d87318791?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1400&q=80&auto=format&fit=crop"
+      ],
+      "galleryCaptions": ["Fig. 01 — Match card explorations", "Fig. 02 — Endorsement primitives"],
+      "quote": {
+        "text": "For the first time it felt like someone who knew me was doing the swiping.",
+        "author": "— Beta user, Copenhagen"
+      },
+      "process": [
+        { "k": "Trust", "v": "Triangle model: you, a friend, a stranger they vouch for." },
+        { "k": "Slowness", "v": "One introduction per day. Purposefully." },
+        { "k": "Tone", "v": "Warm typography, soft elevations, zero gamification." },
+        { "k": "Privacy", "v": "Data stays between the three. No explore feed." }
+      ],
+      "outcomes": "D30 retention 3.4× the dating app average; a quieter inbox that users opened voluntarily."
+    },
+    {
+      "slug": "bioinnovation",
+      "index": "04",
+      "title": "Connecting Minds to Accelerate Innovation",
+      "client": "BioInnovation Institute",
+      "year": "2024",
+      "category": "Platforms & Systems",
+      "role": ["Design System", "Platform UX"],
+      "discipline": "System",
+      "color": "#0a2540",
+      "textOnColor": "#f3f1ec",
+      "cover": "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=1600&q=80&auto=format&fit=crop",
+      "summary": "A platform for founders and scientists — threading collaboration, research and funding into one coherent surface.",
+      "contextLede": "Three separate platforms were consolidated into one — without losing the specific rituals of each community.",
+      "gallery": [
+        "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1556155092-490a1ba16284?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1400&q=80&auto=format&fit=crop"
+      ],
+      "galleryCaptions": ["Fig. 01 — Token system", "Fig. 02 — Research module"],
+      "quote": {
+        "text": "They built us a grammar we could argue in — and the arguments finally converged.",
+        "author": "— Platform Lead, BII"
+      },
+      "process": [
+        { "k": "Audit", "v": "One week mapping overlaps across three products." },
+        { "k": "Tokens", "v": "A typography and spacing scale both audiences agreed on." },
+        { "k": "Surface", "v": "Three home screens, one platform." },
+        { "k": "Governance", "v": "Contribution rules for a fifteen-person team." }
+      ],
+      "outcomes": "Onboarding time halved, support tickets down by a third, and a shared language that survived the redesign."
+    },
+    {
+      "slug": "northbound",
+      "index": "05",
+      "title": "A Calmer Way to Move Your Money",
+      "client": "Northbound Bank",
+      "year": "2023",
+      "category": "Apps & Web-apps",
+      "role": ["Product Design", "Motion"],
+      "discipline": "App",
+      "color": "#c4cdbf",
+      "textOnColor": "#0e1a10",
+      "cover": "https://images.unsplash.com/photo-1556742400-b5b7c5121f1a?w=1600&q=80&auto=format&fit=crop",
+      "summary": "A consumer banking app that replaces dashboards with one honest question: what are you trying to do today?",
+      "contextLede": "Banking apps default to data walls. We tried a softer front door — one that asked, and then answered.",
+      "gallery": [
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1526930382372-67bf22c0fce2?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1579621970588-a35d0e7ab9b6?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1400&q=80&auto=format&fit=crop"
+      ],
+      "galleryCaptions": ["Fig. 01 — Intent-first home", "Fig. 02 — Motion studies"],
+      "quote": {
+        "text": "Our least-stressed users are now our most active ones.",
+        "author": "— CPO, Northbound"
+      },
+      "process": [
+        { "k": "Question", "v": "What are you trying to do today?" },
+        { "k": "Hide", "v": "Dashboards tucked one tap away." },
+        { "k": "Motion", "v": "Transitions that confirm, not celebrate." },
+        { "k": "Color", "v": "A palette that felt like linen, not a trading terminal." }
+      ],
+      "outcomes": "NPS up 22, weekly active up 18%, support tone warmer. Not every bank needs more buttons."
+    },
+    {
+      "slug": "field-notes",
+      "index": "06",
+      "title": "A Studio Identity, Woven in Paper",
+      "client": "Field & Form",
+      "year": "2024",
+      "category": "Other",
+      "role": ["Identity", "Editorial"],
+      "discipline": "Brand",
+      "color": "#2b2421",
+      "textOnColor": "#e7dccb",
+      "cover": "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=1600&q=80&auto=format&fit=crop",
+      "summary": "A small studio identity that refuses a mark — letters set in lead, type wandering between print and pixel.",
+      "contextLede": "A two-person studio with fifteen notebooks and no logo. We built an identity from the margins of those books.",
+      "gallery": [
+        "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1400&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1400&q=80&auto=format&fit=crop"
+      ],
+      "galleryCaptions": ["Fig. 01 — Letterpress specimens", "Fig. 02 — Paper + type studies"],
+      "quote": {
+        "text": "It felt like they found our identity, not invented it.",
+        "author": "— Co-founder, Field & Form"
+      },
+      "process": [
+        { "k": "Listening", "v": "Two weeks of studio visits and notebook reading." },
+        { "k": "Type", "v": "A single mono paired with a warm serif." },
+        { "k": "Paper", "v": "Identity lives off-screen as much as on." },
+        { "k": "Refusal", "v": "A wordmark, not a symbol." }
+      ],
+      "outcomes": "Two studios merged. One voice. Zero logos."
+    }
+  ],
+
+  "capabilitiesSection": {
+    "eyebrow": "(02) Capabilities",
+    "items": [
+      { "k": "Product Design", "v": "End-to-end — discovery, IA, interaction, shipping." },
+      { "k": "Design Systems", "v": "Tokens, components, governance; built to outlast me." },
+      { "k": "Prototyping", "v": "Figma, code, motion. Resolving arguments the fast way." },
+      { "k": "Art Direction", "v": "Type, image, pacing — tone before features." },
+      { "k": "Research", "v": "Interviews, diary studies, usability — quietly." },
+      { "k": "Motion", "v": "GSAP, Lottie, Rive. Movement with a reason to move." }
+    ]
+  },
+
+  "aboutTeaser": {
+    "eyebrow": "(03) About",
+    "heading": "I believe good interfaces are the ones you don't notice — the ones that move out of the way so the work can speak.",
+    "sub": "Fifteen years in, I'm still drawn to the small moments: the hover that confirms, the transition that reassures, the line of type that carries a whole brand on its back.",
+    "ctaLabel": "More about me"
+  },
+
+  "archive": {
+    "eyebrow": "(02) Archive",
+    "heading": "Everything else — fifty-six\nprojects, in plain text.",
+    "sub": "Shorter notes on shipped work. Hover a row to peek.",
+    "rows": [
+      { "y": "2025", "t": "Sundayhouse — rebrand + site", "c": "Brand / Site" },
+      { "y": "2025", "t": "Kiln Reader for iPad", "c": "App" },
+      { "y": "2024", "t": "Folio Editorial — design token audit", "c": "System" },
+      { "y": "2024", "t": "Ø Radio — web player experiments", "c": "Web" },
+      { "y": "2024", "t": "Still Magazine, issue 04", "c": "Editorial" },
+      { "y": "2023", "t": "Mellow Pay onboarding refresh", "c": "Product" },
+      { "y": "2023", "t": "Cartograph — IA workshop", "c": "Consulting" },
+      { "y": "2023", "t": "Harbour — pitch deck", "c": "Brand" },
+      { "y": "2022", "t": "Granite & Pine storefront", "c": "E-commerce" },
+      { "y": "2022", "t": "Veranda — mobile MVP", "c": "Product" }
+    ]
+  },
+
+  "published": {
+    "eyebrow": "(03) Published",
+    "heading": "Essays, talks and the odd\nargument with myself.",
+    "items": [
+      { "y": "2025", "t": "On slowness and the design of restraint", "where": "Essay" },
+      { "y": "2024", "t": "Type as wayfinding", "where": "Figma Config · Talk" },
+      { "y": "2024", "t": "What we keep when we ship", "where": "Essay" },
+      { "y": "2023", "t": "The case for handwritten tokens", "where": "Essay" },
+      { "y": "2023", "t": "Small apps, kinder patterns", "where": "Podcast · Guest" }
+    ]
+  },
+
+  "about": {
+    "eyebrow": "(04) About",
+    "titleLine1": "A designer who prefers",
+    "titleLine2": "quiet confidence.",
+    "image": "https://images.unsplash.com/photo-1527436826045-8805c615a6df?w=1000&q=80&auto=format&fit=crop",
+    "imageTag": "Cph · 2026",
+    "bio": [
+      "Hi — I'm Atulya. I design products and identities that try to do less, better. My work sits at the intersection of interaction, type and tone. I care about legibility, pacing, and the small sound a button makes when it's been considered.",
+      "I grew up between cities — Mumbai, Berlin, Copenhagen — and most of what I know I learned from the people around me. Before going independent I spent eight years in product studios, shipping across finance, health, media and the quiet kind of consumer apps you keep on your home screen.",
+      "Outside of client work I write essays, teach the occasional workshop, and keep a shelf of handmade notebooks that never quite get used."
+    ],
+    "experienceHeading": "Short version",
+    "experience": [
+      { "y": "2024 — now", "r": "Independent — Design practice, Copenhagen" },
+      { "y": "2020 — 24", "r": "Senior Product Designer — Something Studio" },
+      { "y": "2017 — 20", "r": "Designer — Another Studio" },
+      { "y": "2015 — 17", "r": "Visual Designer — Small Agency, Mumbai" }
+    ],
+    "clientsEyebrow": "Selected clients",
+    "clients": [
+      "Pointvoucher", "BioInnovation Institute", "Recommendating", "Rasmus Noah Hansen",
+      "Field & Form", "Northbound", "Still Magazine", "Sundayhouse", "Mellow Pay", "Harbour",
+      "Kiln Reader", "Folio Editorial", "Ø Radio"
+    ]
+  },
+
+  "contact": {
+    "eyebrow": "(05) Contact",
+    "heading": "Let's make something\nhonest together.",
+    "formLabels": ["Name", "Email", "Project"],
+    "placeholders": ["Your name", "you@company.com", "A couple sentences is enough."],
+    "submitLabel": "Send →",
+    "directEyebrow": "Direct",
+    "calendarEyebrow": "Calendar",
+    "calendarLabel": "Book a 30-min intro ↗",
+    "officeEyebrow": "Office"
+  },
+
+  "footer": {
+    "eyebrow": "Let's talk",
+    "lead": "Currently taking on two new projects for autumn — interaction-led product work, thoughtful brand systems, and long-form case studies.",
+    "bigWord1": "Say",
+    "bigWord2": "hello",
+    "bigArrow": "↗",
+    "basedLabel": "Based",
+    "basedValue": "Copenhagen, DK ↔ remote",
+    "contactLabel": "Contact",
+    "followLabel": "Follow",
+    "colophonLabel": "Colophon"
+  }
+}

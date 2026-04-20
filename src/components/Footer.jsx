@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Footer() {
+  const { content } = useContent()
+  const f = content.footer
+  const site = content.site
   const root = useRef(null)
   const big = useRef(null)
 
@@ -32,51 +36,48 @@ export default function Footer() {
   return (
     <footer ref={root} className="footer">
       <div className="footer__top">
-        <p className="eyebrow">Let's talk</p>
-        <p className="footer__lead lede">
-          Currently taking on two new projects for autumn — interaction-led
-          product work, thoughtful brand systems, and long-form case studies.
-        </p>
+        <p className="eyebrow">{f.eyebrow}</p>
+        <p className="footer__lead lede">{f.lead}</p>
       </div>
 
       <a
         ref={big}
         className="footer__big display"
-        href="mailto:hi@atulya.studio"
+        href={`mailto:${site.email}`}
         data-cursor="link"
         data-cursor-label="Write a note"
       >
-        <span>Say</span>
-        <span className="serif">hello</span>
-        <span>↗</span>
+        <span>{f.bigWord1}</span>
+        <span className="serif">{f.bigWord2}</span>
+        <span>{f.bigArrow}</span>
       </a>
 
       <div className="footer__grid">
         <div>
-          <p className="eyebrow">Based</p>
-          <p>Copenhagen, DK ↔ remote</p>
+          <p className="eyebrow">{f.basedLabel}</p>
+          <p>{f.basedValue}</p>
         </div>
         <div>
-          <p className="eyebrow">Contact</p>
-          <a href="mailto:hi@atulya.studio" data-cursor="link">hi@atulya.studio</a>
-          <a href="#" data-cursor="link">+45 00 00 00 00</a>
+          <p className="eyebrow">{f.contactLabel}</p>
+          <a href={`mailto:${site.email}`} data-cursor="link">{site.email}</a>
+          <a href="#" data-cursor="link">{site.phone}</a>
         </div>
         <div>
-          <p className="eyebrow">Follow</p>
-          <a href="#" data-cursor="link">LinkedIn ↗</a>
-          <a href="#" data-cursor="link">Read.cv ↗</a>
-          <a href="#" data-cursor="link">Are.na ↗</a>
+          <p className="eyebrow">{f.followLabel}</p>
+          {site.socials.map((s) => (
+            <a key={s.label} href={s.url} data-cursor="link">{s.label}</a>
+          ))}
         </div>
         <div>
-          <p className="eyebrow">Colophon</p>
-          <p>Built with React, GSAP, Lenis. Type in Inter Tight & Instrument Serif.</p>
+          <p className="eyebrow">{f.colophonLabel}</p>
+          <p>{site.colophon}</p>
         </div>
       </div>
 
       <div className="footer__bar mono">
-        <span>© 2026 Atulya</span>
-        <span>All projects, unless noted, © their respective owners.</span>
-        <span>v. 0.1</span>
+        <span>{site.copyright}</span>
+        <span>{site.rights}</span>
+        <span>{site.version}</span>
       </div>
     </footer>
   )
