@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowUpRight } from 'lucide-react'
 import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -9,6 +11,8 @@ export default function Footer() {
   const { content } = useContent()
   const f = content.footer
   const site = content.site
+  const hero = content.hero
+  const nav = content.nav
   const root = useRef(null)
   const big = useRef(null)
 
@@ -16,15 +20,15 @@ export default function Footer() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         big.current,
-        { yPercent: 30, scale: 0.98 },
+        { yPercent: 20, opacity: 0.6 },
         {
           yPercent: 0,
-          scale: 1,
+          opacity: 1,
           ease: 'none',
           scrollTrigger: {
             trigger: root.current,
             start: 'top bottom',
-            end: 'bottom bottom',
+            end: 'top 20%',
             scrub: true,
           },
         },
@@ -34,49 +38,62 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer ref={root} className="footer">
-      <div className="footer__top">
-        <p className="eyebrow">{f.eyebrow}</p>
-        <p className="footer__lead lede">{f.lead}</p>
+    <footer ref={root} className="footer-v">
+      {/* Big CTA */}
+      <div className="footer-v__cta">
+        <p className="eyebrow footer-v__cta-eyebrow">{f.eyebrow}</p>
+        <a
+          ref={big}
+          href={`mailto:${site.email}`}
+          className="footer-v__big"
+          data-cursor="link"
+          data-cursor-label="Write a note"
+        >
+          <span>Start a project</span>
+          <ArrowUpRight className="footer-v__big-icon" />
+        </a>
+        <p className="footer-v__lead">{f.lead}</p>
       </div>
 
-      <a
-        ref={big}
-        className="footer__big display"
-        href={`mailto:${site.email}`}
-        data-cursor="link"
-        data-cursor-label="Write a note"
-      >
-        <span>{f.bigWord1}</span>
-        <span className="serif">{f.bigWord2}</span>
-        <span>{f.bigArrow}</span>
-      </a>
-
-      <div className="footer__grid">
-        <div>
-          <p className="eyebrow">{f.basedLabel}</p>
-          <p>{f.basedValue}</p>
-        </div>
-        <div>
-          <p className="eyebrow">{f.contactLabel}</p>
+      {/* Columns */}
+      <div className="footer-v__cols">
+        <div className="footer-v__col">
+          <p className="eyebrow">{f.contactLabel || 'Contact'}</p>
           <a href={`mailto:${site.email}`} data-cursor="link">{site.email}</a>
-          <a href="#" data-cursor="link">{site.phone}</a>
+          <a href={`tel:${site.phone}`} data-cursor="link">{site.phone}</a>
+          <span className="footer-v__muted">{site.studio}</span>
         </div>
-        <div>
-          <p className="eyebrow">{f.followLabel}</p>
-          {site.socials.map((s) => (
-            <a key={s.label} href={s.url} data-cursor="link">{s.label}</a>
+        <div className="footer-v__col">
+          <p className="eyebrow">Navigate</p>
+          {nav.menuItems.slice(1).map((m) => (
+            <Link key={m.label + m.num} to={m.path} data-cursor="link">
+              {m.label}
+            </Link>
           ))}
         </div>
-        <div>
-          <p className="eyebrow">{f.colophonLabel}</p>
-          <p>{site.colophon}</p>
+        <div className="footer-v__col">
+          <p className="eyebrow">{f.followLabel || 'Elsewhere'}</p>
+          {site.socials.map((s) => (
+            <a key={s.label} href={s.url} data-cursor="link">
+              {s.label}
+            </a>
+          ))}
+        </div>
+        <div className="footer-v__col footer-v__col--status">
+          <p className="eyebrow">Status</p>
+          <span className="footer-v__status">
+            <span className="footer-v__dot" aria-hidden />
+            {hero.availabilityStatus || 'Available for hire'}
+          </span>
+          <span className="footer-v__muted">{site.availability}</span>
+          <span className="footer-v__muted">{site.slotsLeft}</span>
         </div>
       </div>
 
-      <div className="footer__bar mono">
+      {/* Colophon bar */}
+      <div className="footer-v__bar mono">
         <span>{site.copyright}</span>
-        <span>{site.rights}</span>
+        <span className="footer-v__muted">{site.colophon}</span>
         <span>{site.version}</span>
       </div>
     </footer>

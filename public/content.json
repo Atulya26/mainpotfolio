@@ -30,10 +30,10 @@
     "bgAltLight": "#ece4d7",
     "fgLight": "#151311",
     "fgMutedLight": "#6d645b",
-    "bgDark": "#12100f",
-    "bgAltDark": "#1b1817",
-    "fgDark": "#f4ede2",
-    "fgMutedDark": "#aea294",
+    "bgDark": "#0e0e0f",
+    "bgAltDark": "#141416",
+    "fgDark": "#ededed",
+    "fgMutedDark": "#8a8a8a",
     "fontDisplay": "Schibsted Grotesk",
     "fontSerif": "Instrument Serif",
     "fontMono": "JetBrains Mono"
@@ -63,12 +63,14 @@
     "metaLeft": "Atulya — Product & Interaction Designer",
     "metaRight": "",
     "titleLines": [
-      "Designing interfaces",
-      "with clarity, craft,",
-      "and a little restraint."
+      "Atulya",
+      "Sharma"
     ],
+    "intro": "Independent product and interaction designer. I work at the seam of product, brand and motion — currently shipping small, honest things from Copenhagen.",
+    "projectsCount": "Projects (14)",
+    "availabilityStatus": "Available for hire",
     "showcaseEyebrow": "Selected UI showcase",
-    "showcaseIntro": "A horizontal reel of interface studies, systems work, and product screens. Scroll through the cards and head to the full external showcase at the end.",
+    "showcaseIntro": "A scrollable slice of interface studies, systems work, and product screens.",
     "showcaseCtaLabel": "Full external showcase",
     "showcaseUrl": "#",
     "mediaSrc": "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?w=1600&q=80&auto=format&fit=crop",
@@ -77,6 +79,42 @@
     "ticker": ["● Available · Autumn 2026", "● Two slots left"],
     "scrollHint": "Scroll · Selected work"
   },
+
+  "services": {
+    "eyebrow": "Services",
+    "heading": "What I do",
+    "items": [
+      "Product Design",
+      "UX / UI",
+      "Design Systems",
+      "Art Direction",
+      "Interaction",
+      "Motion",
+      "Prototyping",
+      "Brand"
+    ]
+  },
+
+  "stats": {
+    "eyebrow": "Numbers",
+    "items": [
+      { "v": "32+", "l": "Clients" },
+      { "v": "14", "l": "Case studies" },
+      { "v": "56", "l": "Archive entries" },
+      { "v": "09", "l": "Years in practice" }
+    ]
+  },
+
+  "awards": {
+    "eyebrow": "Awards & press",
+    "items": [
+      { "y": "2025", "t": "Awwwards · Site of the Day", "where": "Pointvoucher" },
+      { "y": "2024", "t": "Framer · Portfolio Feature", "where": "Atulya.studio" },
+      { "y": "2024", "t": "CSSDA · Website of the Day", "where": "BioInnovation Institute" },
+      { "y": "2023", "t": "The FWA · Shortlist", "where": "Northbound Bank" }
+    ]
+  },
+
 
   "marquee": {
     "words": ["Selected", "2022 — 26", "Copenhagen", "Product", "Brand", "Interaction"]

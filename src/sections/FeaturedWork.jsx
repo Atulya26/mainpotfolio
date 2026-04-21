@@ -2,123 +2,120 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowUpRight } from 'lucide-react'
 import { useContent } from '../context/ContentContext.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Verris-style featured work: hairline-divided rows with hover thumbnails.
+// Label on the left (client + meta), hoverable thumbnail tracking the cursor.
 export default function FeaturedWork() {
   const { content } = useContent()
   const projects = content.projects
   const categories = content.categories
   const root = useRef(null)
+  const thumbRef = useRef(null)
   const [filter, setFilter] = useState('All')
+  const [hover, setHover] = useState(null)
   const items = filter === 'All' ? projects : projects.filter((p) => p.category === filter)
 
+  // Fade in heading + rows
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = root.current.querySelectorAll('.pc')
-      cards.forEach((card) => {
-        gsap.from(card.querySelector('.pc__img'), {
-          scale: 1.15,
-          yPercent: 8,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        })
-        gsap.from(card, {
-          y: 40,
-          opacity: 0,
-          duration: 1.1,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
-          },
-        })
-      })
-
-      gsap.from('.fw__heading-el', {
-        y: 60,
+      gsap.from('.fwv__heading-el', {
+        y: 40,
         opacity: 0,
-        duration: 1,
+        duration: 0.9,
         ease: 'expo.out',
         stagger: 0.06,
-        scrollTrigger: { trigger: '.fw__heading', start: 'top 80%' },
+        scrollTrigger: { trigger: '.fwv__heading', start: 'top 82%' },
+      })
+      gsap.from('.fwv__row', {
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'expo.out',
+        stagger: 0.04,
+        scrollTrigger: { trigger: '.fwv__list', start: 'top 82%' },
       })
     }, root)
     return () => ctx.revert()
   }, [filter, items.length])
 
+  // Cursor-following thumbnail
+  useEffect(() => {
+    const onMove = (e) => {
+      if (!thumbRef.current) return
+      thumbRef.current.style.setProperty('--x', `${e.clientX}px`)
+      thumbRef.current.style.setProperty('--y', `${e.clientY}px`)
+    }
+    window.addEventListener('pointermove', onMove)
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+
   return (
-    <section ref={root} className="fw" id="selected">
-      <div className="fw__heading">
-        <span className="mono fw__heading-el">{content.featured.eyebrow}</span>
-        <h2 className="h2 fw__heading-el" style={{ whiteSpace: 'pre-line' }}>
+    <section ref={root} className="fwv" id="selected">
+      <div className="fwv__heading">
+        <p className="eyebrow fwv__heading-el">{content.featured.eyebrow}</p>
+        <h2 className="fwv__title fwv__heading-el" style={{ whiteSpace: 'pre-line' }}>
           {content.featured.heading}
         </h2>
       </div>
 
-      <div className="fw__filters mono">
+      <div className="fwv__filters">
         {categories.map((c) => (
           <button
             key={c}
             onClick={() => setFilter(c)}
-            className={`fw__filter ${filter === c ? 'is-active' : ''}`}
+            className={`fwv__filter mono ${filter === c ? 'is-active' : ''}`}
             data-cursor="button"
           >
             <span>{c}</span>
-            <span className="fw__filter-count">
+            <span className="fwv__filter-count">
               {c === 'All' ? projects.length : projects.filter((p) => p.category === c).length}
             </span>
           </button>
         ))}
       </div>
 
-      <ul className="fw__list">
+      <ul className="fwv__list">
         {items.map((p, i) => (
-          <li key={p.slug} className={`pc ${i % 2 ? 'pc--right' : 'pc--left'}`}>
+          <li key={p.slug} className="fwv__row">
             <Link
               to={`/work/${p.slug}`}
-              className="pc__link"
+              className="fwv__link"
+              onMouseEnter={() => setHover(p)}
+              onMouseLeave={() => setHover(null)}
               data-cursor="case"
               data-cursor-label="View case"
             >
-              <div className="pc__top">
-                <span className="mono">{p.index}</span>
-                <span className="mono">{p.year}</span>
-              </div>
-              <div className="pc__img-wrap" style={{ background: p.color }}>
-                <img className="pc__img" src={p.cover} alt={p.client} />
-                <span className="pc__discipline mono" style={{ color: p.textOnColor }}>
-                  {p.discipline}
-                </span>
-              </div>
-              <div className="pc__meta">
-                <h3 className="pc__title">
-                  <span className="pc__client">{p.client}</span>
-                  <span className="pc__hyphen">—</span>
-                  <span className="pc__headline">{p.title}</span>
-                </h3>
-                <div className="pc__roles mono">
-                  {p.role.map((r) => (
-                    <span key={r}>{r}</span>
-                  ))}
-                </div>
-              </div>
+              <span className="fwv__index mono">{String(i + 1).padStart(2, '0')}</span>
+              <span className="fwv__client">{p.client}</span>
+              <span className="fwv__headline">{p.title}</span>
+              <span className="fwv__cat mono">{p.category}</span>
+              <span className="fwv__year mono">{p.year}</span>
+              <span className="fwv__arrow">
+                <ArrowUpRight />
+              </span>
             </Link>
           </li>
         ))}
       </ul>
 
-      <div className="fw__foot">
-        <Link to="/archive" className="fw__all mono" data-cursor="link" data-cursor-label="All work">
+      <div className="fwv__foot">
+        <Link to="/archive" className="fwv__all mono" data-cursor="link" data-cursor-label="All work">
           <span>{content.featured.ctaLabel}</span>
-          <span>↗</span>
+          <ArrowUpRight className="fwv__all-icon" />
         </Link>
+      </div>
+
+      {/* Cursor-follow thumbnail */}
+      <div ref={thumbRef} className={`fwv__thumb ${hover ? 'is-on' : ''}`} aria-hidden>
+        {hover && (
+          <div className="fwv__thumb-inner" style={{ background: hover.color }}>
+            <img src={hover.cover} alt="" />
+          </div>
+        )}
       </div>
     </section>
   )

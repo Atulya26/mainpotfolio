@@ -39,7 +39,7 @@ function SiteLayout() {
 function PublicSite() {
   useLenis()
   const [loaded, setLoaded] = useState(false)
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState('dark')
   const location = useLocation()
 
   useEffect(() => {
