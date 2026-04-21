@@ -4,7 +4,6 @@ import Services from '../sections/Services.jsx'
 import Stats from '../sections/Stats.jsx'
 import Awards from '../sections/Awards.jsx'
 import UIShowcase from '../sections/UIShowcase.jsx'
-import Marquee from '../sections/Marquee.jsx'
 import AboutTeaser from '../sections/AboutTeaser.jsx'
 import Footer from '../components/Footer.jsx'
 
@@ -13,12 +12,11 @@ export default function Home() {
     <>
       <Hero />
       <FeaturedWork />
-      <Services />
       <Stats />
+      <Services />
       <UIShowcase />
-      <Awards />
       <AboutTeaser />
-      <Marquee />
+      <Awards />
       <Footer />
     </>
   )

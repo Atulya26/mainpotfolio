@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ArrowLeft, ArrowRight } from 'lucide-react'
@@ -124,7 +125,13 @@ export default function UIShowcase() {
         onKeyDown={onRailKey}
       >
         {projects.map((project, i) => (
-          <article key={project.slug} className="showcase-v__card">
+          <Link
+            key={project.slug}
+            to={`/work/${project.slug}`}
+            className="showcase-v__card"
+            data-cursor="case"
+            data-cursor-label="View case"
+          >
             <div className="showcase-v__top mono">
               <span>{String(i + 1).padStart(2, '0')}</span>
               <span>{project.year}</span>
@@ -140,7 +147,8 @@ export default function UIShowcase() {
               <span className="showcase-v__sep">—</span>
               <span className="showcase-v__headline">{project.title}</span>
             </h3>
-          </article>
+            <p className="showcase-v__excerpt">{project.summary}</p>
+          </Link>
         ))}
 
         {hasShowcaseUrl ? (

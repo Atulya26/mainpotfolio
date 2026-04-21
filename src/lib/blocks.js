@@ -14,6 +14,9 @@ export const BLOCK_LABELS = {
   imagePair: 'Image pair',
   imageGallery: 'Gallery',
   stats: 'Stats',
+  factGrid: 'Fact grid',
+  bulletList: 'Bullet list',
+  timeline: 'Timeline',
   processCards: 'Process cards',
   callout: 'Callout',
   videoEmbed: 'Video embed',
@@ -29,6 +32,9 @@ export const BLOCK_DESCRIPTIONS = {
   imagePair: 'Two side-by-side figures with captions.',
   imageGallery: 'A grid of three to six images with captions.',
   stats: 'Key metrics — numbers + labels in a row.',
+  factGrid: 'Compact project facts or metadata in a tidy grid.',
+  bulletList: 'A titled list of takeaways, principles, or outcomes.',
+  timeline: 'Phase-by-phase rows for process, milestones, or launch history.',
   processCards: 'Horizontal-scroll pinned cards for a process or steps.',
   callout: 'A highlighted note or takeaway.',
   videoEmbed: 'An embedded video (YouTube, Vimeo, or MP4).',
@@ -51,6 +57,28 @@ const DEFAULTS = {
   }),
   imageGallery: () => ({ items: [{ src: '', caption: '' }], columns: 3 }),
   stats: () => ({ items: [{ v: '+41%', l: 'Activation' }, { v: '-28%', l: 'Support tickets' }] }),
+  factGrid: () => ({
+    eyebrow: 'Project facts',
+    items: [
+      { label: 'Timeline', value: '12 weeks' },
+      { label: 'Team', value: 'PM, 2 engineers, 1 designer' },
+      { label: 'Role', value: 'Lead product design' },
+      { label: 'Outcome', value: '+41% activation' },
+    ],
+  }),
+  bulletList: () => ({
+    eyebrow: 'Key takeaways',
+    heading: 'What changed',
+    items: ['Simpler navigation', 'Calmer onboarding', 'Stronger system foundations'],
+  }),
+  timeline: () => ({
+    eyebrow: 'Timeline',
+    items: [
+      { k: '01 / Discover', v: 'Research, audits, and problem framing.' },
+      { k: '02 / Make', v: 'Wireframes, prototypes, and system decisions.' },
+      { k: '03 / Ship', v: 'Refinement, QA, launch support, and measurement.' },
+    ],
+  }),
   processCards: () => ({
     eyebrow: 'Process',
     heading: 'Four moves we made.',

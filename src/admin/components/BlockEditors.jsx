@@ -215,6 +215,113 @@ export function StatsEditor({ block, onChange }) {
   )
 }
 
+export function FactGridEditor({ block, onChange }) {
+  const items = block.items || []
+  const setItems = (next) => onChange({ items: next })
+  return (
+    <div className="flex flex-col gap-3">
+      <Field label="Eyebrow">
+        <Input value={block.eyebrow || ''} onChange={(e) => onChange({ eyebrow: e.target.value })} />
+      </Field>
+      {items.map((item, i) => (
+        <div key={i} className="grid grid-cols-[1fr_2fr_auto] gap-2 items-end">
+          <Field label="Label">
+            <Input value={item.label || ''} onChange={(e) => {
+              const next = [...items]
+              next[i] = { ...item, label: e.target.value }
+              setItems(next)
+            }} />
+          </Field>
+          <Field label="Value">
+            <Textarea rows={2} autoGrow value={item.value || ''} onChange={(e) => {
+              const next = [...items]
+              next[i] = { ...item, value: e.target.value }
+              setItems(next)
+            }} />
+          </Field>
+          <Button variant="ghost" size="icon" onClick={() => setItems(items.filter((_, j) => j !== i))}>
+            <Trash2 className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      ))}
+      <Button variant="secondary" size="sm" className="self-start" onClick={() => setItems([...items, { label: 'New fact', value: 'Short description' }])}>
+        <Plus className="h-3.5 w-3.5" /> Add fact
+      </Button>
+    </div>
+  )
+}
+
+export function BulletListEditor({ block, onChange }) {
+  const items = block.items || []
+  const setItems = (next) => onChange({ items: next })
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="grid gap-3 md:grid-cols-[180px_1fr]">
+        <Field label="Eyebrow">
+          <Input value={block.eyebrow || ''} onChange={(e) => onChange({ eyebrow: e.target.value })} />
+        </Field>
+        <Field label="Heading">
+          <Input value={block.heading || ''} onChange={(e) => onChange({ heading: e.target.value })} />
+        </Field>
+      </div>
+      {items.map((item, i) => (
+        <div key={i} className="grid grid-cols-[auto_1fr_auto] gap-2 items-start">
+          <span className="mono-font mt-3 text-[10px] uppercase tracking-[0.12em] text-[var(--admin-subtle)]">{String(i + 1).padStart(2, '0')}</span>
+          <Field label="Item">
+            <Textarea rows={2} autoGrow value={item} onChange={(e) => {
+              const next = [...items]
+              next[i] = e.target.value
+              setItems(next)
+            }} />
+          </Field>
+          <Button variant="ghost" size="icon" className="mt-6" onClick={() => setItems(items.filter((_, j) => j !== i))}>
+            <Trash2 className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      ))}
+      <Button variant="secondary" size="sm" className="self-start" onClick={() => setItems([...items, 'New list item'])}>
+        <Plus className="h-3.5 w-3.5" /> Add item
+      </Button>
+    </div>
+  )
+}
+
+export function TimelineEditor({ block, onChange }) {
+  const items = block.items || []
+  const setItems = (next) => onChange({ items: next })
+  return (
+    <div className="flex flex-col gap-3">
+      <Field label="Eyebrow">
+        <Input value={block.eyebrow || ''} onChange={(e) => onChange({ eyebrow: e.target.value })} />
+      </Field>
+      {items.map((item, i) => (
+        <div key={i} className="grid grid-cols-[180px_1fr_auto] gap-2 items-start">
+          <Field label="Step / phase">
+            <Input value={item.k || ''} onChange={(e) => {
+              const next = [...items]
+              next[i] = { ...item, k: e.target.value }
+              setItems(next)
+            }} />
+          </Field>
+          <Field label="Description">
+            <Textarea rows={2} autoGrow value={item.v || ''} onChange={(e) => {
+              const next = [...items]
+              next[i] = { ...item, v: e.target.value }
+              setItems(next)
+            }} />
+          </Field>
+          <Button variant="ghost" size="icon" className="mt-6" onClick={() => setItems(items.filter((_, j) => j !== i))}>
+            <Trash2 className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      ))}
+      <Button variant="secondary" size="sm" className="self-start" onClick={() => setItems([...items, { k: '04 / Launch', v: 'What happened in this phase.' }])}>
+        <Plus className="h-3.5 w-3.5" /> Add row
+      </Button>
+    </div>
+  )
+}
+
 export function ProcessCardsEditor({ block, onChange }) {
   const cards = block.cards || []
   const setCards = (next) => onChange({ cards: next })
@@ -285,6 +392,9 @@ export const EDITORS = {
   imagePair: ImagePairEditor,
   imageGallery: ImageGalleryEditor,
   stats: StatsEditor,
+  factGrid: FactGridEditor,
+  bulletList: BulletListEditor,
+  timeline: TimelineEditor,
   processCards: ProcessCardsEditor,
   callout: CalloutEditor,
   videoEmbed: VideoEmbedEditor,

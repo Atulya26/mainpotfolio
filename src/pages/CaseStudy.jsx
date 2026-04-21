@@ -87,12 +87,35 @@ export default function CaseStudy() {
           <span>{project.index} / Case Study</span>
           <span>{project.year}</span>
         </div>
-        <h1 className="display cs__intro-title" data-split-scroll>{project.title}.</h1>
-        <div className="cs__intro-info">
-          <div><span className="mono">Client</span><p>{project.client}</p></div>
-          <div><span className="mono">Discipline</span><p>{project.category}</p></div>
-          <div><span className="mono">Role</span><p>{project.role.join(', ')}</p></div>
-          <div><span className="mono">Year</span><p>{project.year}</p></div>
+        <div className="cs__intro-grid">
+          <div className="cs__intro-copy">
+            <h1 className="display cs__intro-title" data-split-scroll>{project.title}.</h1>
+            {project.summary && (
+              <p className="cs__intro-summary" data-split-scroll>{project.summary}</p>
+            )}
+          </div>
+          <div className="cs__intro-info">
+            <div>
+              <span className="mono">Client</span>
+              <p>{project.client}</p>
+            </div>
+            <div>
+              <span className="mono">Discipline</span>
+              <p>{project.category}</p>
+            </div>
+            <div>
+              <span className="mono">Deliverable</span>
+              <p>{project.discipline}</p>
+            </div>
+            <div>
+              <span className="mono">Role</span>
+              <div className="cs__intro-pills">
+                {project.role.map((item) => (
+                  <span key={item} className="cs__intro-pill mono">{item}</span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

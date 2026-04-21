@@ -8,13 +8,15 @@ export default function Nav({ theme, onToggleTheme }) {
   const site = content.site
   const links = content.nav.links
   const hero = content.hero
-  const projectsCount = content.projects.length
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [time, setTime] = useState('')
   const location = useLocation()
 
-  useEffect(() => setOpen(false), [location.pathname])
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setOpen(false))
+    return () => cancelAnimationFrame(id)
+  }, [location.pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -62,6 +64,10 @@ export default function Nav({ theme, onToggleTheme }) {
         </nav>
 
         <div className="nav-v__right">
+          <div className="nav-v__clock mono hide-mobile">
+            <span>{site.location}</span>
+            <span>{site.timezoneLabel || 'Local'} · {time}</span>
+          </div>
           <span className="nav-v__status mono hide-mobile">
             <span className="nav-v__dot" aria-hidden />
             {hero.availabilityStatus || 'Available'}

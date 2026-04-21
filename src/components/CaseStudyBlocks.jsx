@@ -18,6 +18,9 @@ export function BlockRenderer({ block }) {
     case 'imagePair': return <ImagePairBlock b={block} />
     case 'imageGallery': return <GalleryBlock b={block} />
     case 'stats': return <StatsBlock b={block} />
+    case 'factGrid': return <FactGridBlock b={block} />
+    case 'bulletList': return <BulletListBlock b={block} />
+    case 'timeline': return <TimelineBlock b={block} />
     case 'processCards': return <ProcessBlock b={block} />
     case 'callout': return <CalloutBlock b={block} />
     case 'videoEmbed': return <VideoBlock b={block} />
@@ -99,6 +102,69 @@ function StatsBlock({ b }) {
       {(b.items || []).map((s, i) => (
         <Stat key={i} index={i} value={s.v} label={s.l} />
       ))}
+    </section>
+  )
+}
+
+function FactGridBlock({ b }) {
+  const ref = useReveal()
+  const items = (b.items || []).filter((item) => item.label || item.value)
+  if (!items.length) return null
+
+  return (
+    <section ref={ref} className="cs-block-wrap shell cs-facts">
+      {b.eyebrow && <span className="mono cs-facts__eyebrow">{b.eyebrow}</span>}
+      <div className="cs-facts__grid">
+        {items.map((item, i) => (
+          <div key={i} className="cs-fact">
+            <span className="mono">{item.label}</span>
+            <p>{item.value}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function BulletListBlock({ b }) {
+  const ref = useReveal()
+  const items = (b.items || []).filter(Boolean)
+  if (!items.length) return null
+
+  return (
+    <section ref={ref} className="cs-block-wrap shell cs-list">
+      <div className="cs-list__head">
+        {b.eyebrow && <span className="mono">{b.eyebrow}</span>}
+        {b.heading && <h3 className="cs-list__heading">{b.heading}</h3>}
+      </div>
+      <ul className="cs-list__items">
+        {items.map((item, i) => (
+          <li key={i} className="cs-list__item">
+            <span className="mono cs-list__index">{String(i + 1).padStart(2, '0')}</span>
+            <p>{item}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+function TimelineBlock({ b }) {
+  const ref = useReveal()
+  const items = (b.items || []).filter((item) => item.k || item.v)
+  if (!items.length) return null
+
+  return (
+    <section ref={ref} className="cs-block-wrap shell cs-timeline">
+      {b.eyebrow && <span className="mono cs-timeline__eyebrow">{b.eyebrow}</span>}
+      <div className="cs-timeline__rows">
+        {items.map((item, i) => (
+          <div key={i} className="cs-timeline__row">
+            <span className="mono">{item.k}</span>
+            <p>{item.v}</p>
+          </div>
+        ))}
+      </div>
     </section>
   )
 }

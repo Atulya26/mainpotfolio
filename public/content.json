@@ -83,6 +83,7 @@
   "services": {
     "eyebrow": "Services",
     "heading": "What I do",
+    "intro": "From product direction to interface detail, I work with teams that need a design partner who can think structurally and still care about the last 8 pixels.",
     "items": [
       "Product Design",
       "UX / UI",
@@ -123,6 +124,7 @@
   "featured": {
     "eyebrow": "(01) Selected works · 2022—26",
     "heading": "A handful of projects I'm still\nquietly proud of.",
+    "sub": "Selected case studies across apps, websites, and systems work. Each one is here because the final thing feels sharper than what came before it.",
     "ctaLabel": "See full archive (56)"
   },
 
@@ -202,6 +204,17 @@
           "author": "— Head of Product, Pointvoucher"
         },
         {
+          "id": "pv-7b",
+          "type": "factGrid",
+          "eyebrow": "Project facts",
+          "items": [
+            { "label": "Timeline", "value": "12 weeks from research to release candidate." },
+            { "label": "Team", "value": "PM, two engineers, one designer." },
+            { "label": "Scope", "value": "Wallet flows, rewards states, token system." },
+            { "label": "Focus", "value": "Calmer checkout and clearer activation." }
+          ]
+        },
+        {
           "id": "pv-8",
           "type": "processCards",
           "eyebrow": "Process",
@@ -245,6 +258,27 @@
           "type": "twoColumn",
           "label": "Outcomes",
           "body": "Activation up 41%, support tickets down 28%, and a team that finally trusts its own component library. The product got simpler; the people, less tired."
+        },
+        {
+          "id": "pv-13",
+          "type": "bulletList",
+          "eyebrow": "What changed",
+          "heading": "Three things the redesign made easier",
+          "items": [
+            "Users could reach their active card with less visual noise and fewer taps.",
+            "Merchant-facing states finally behaved consistently across loyalty, rewards, and expired offers.",
+            "The product team got a reusable type and spacing system instead of another one-off launch layer."
+          ]
+        },
+        {
+          "id": "pv-14",
+          "type": "timeline",
+          "eyebrow": "Delivery",
+          "items": [
+            { "k": "01 / Frame", "v": "Interview synthesis, competitor teardown, and a fresh jobs-to-be-done statement." },
+            { "k": "02 / Prototype", "v": "Rapid interaction studies in Figma and code to de-risk the wallet and checkout states." },
+            { "k": "03 / Ship", "v": "System cleanup, QA support, and instrumentation planning for rollout." }
+          ]
         }
       ]
     },
