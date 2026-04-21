@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Dialog, DialogHeader, Button, Input, Field, Label, toast,
 } from './components/ui.jsx'
@@ -22,11 +22,11 @@ export default function PublishDialog({ open, onOpenChange }) {
       .filter((k) => JSON.stringify(content[k]) !== JSON.stringify(publishedContent[k]))
   }, [content, publishedContent])
 
-  useEffect(() => {
-    if (open) setVerified(null)
-  }, [open])
-
   const saveCfg = () => setGithubConfig(cfg)
+  const handleOpenChange = (next) => {
+    if (!next) setVerified(null)
+    onOpenChange(next)
+  }
 
   const verify = async () => {
     setVerifying(true)
@@ -56,7 +56,7 @@ export default function PublishDialog({ open, onOpenChange }) {
       await putContentFile(cfg, content, message, sha)
       markPublished(content)
       toast('Published. Your host should redeploy shortly.', { variant: 'success' })
-      onOpenChange(false)
+      handleOpenChange(false)
     } catch (e) {
       toast('Publish failed: ' + e.message, { variant: 'destructive' })
     } finally {
@@ -75,10 +75,10 @@ export default function PublishDialog({ open, onOpenChange }) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogHeader onClose={() => onOpenChange(false)}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogHeader onClose={() => handleOpenChange(false)}>
         <h2 className="text-lg font-medium text-white">Publish changes</h2>
-        <p className="text-sm text-white/50 mt-1">
+        <p className="mt-1 text-sm leading-6 text-[var(--admin-muted)]">
           {diff.length === 0
             ? 'No changes since the last published version.'
             : `${diff.length} section${diff.length === 1 ? '' : 's'} changed.`}
@@ -86,18 +86,18 @@ export default function PublishDialog({ open, onOpenChange }) {
       </DialogHeader>
 
       {diff.length > 0 && (
-        <div className="mb-4 rounded-md border border-white/10 bg-white/[0.02] p-3">
-          <p className="mb-2 text-[10px] uppercase tracking-wider text-white/40 mono-font">Changed</p>
+        <div className="mb-4 rounded-[22px] border border-[var(--admin-border)] bg-[var(--admin-panel-muted)] p-4">
+          <p className="mono-font mb-2 text-[10px] uppercase tracking-[0.12em] text-[var(--admin-subtle)]">Changed</p>
           <div className="flex flex-wrap gap-1.5">
             {diff.map((k) => (
-              <span key={k} className="rounded-md bg-white/10 px-2 py-0.5 text-xs text-white">{k}</span>
+              <span key={k} className="rounded-xl border border-[var(--admin-border)] bg-white/[0.04] px-2.5 py-1 text-xs text-white">{k}</span>
             ))}
           </div>
         </div>
       )}
 
       <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid gap-3 md:grid-cols-2">
           <Field label="GitHub owner">
             <Input value={cfg.owner} onChange={(e) => setCfg({ ...cfg, owner: e.target.value })} placeholder="Atulya26" />
           </Field>
@@ -144,12 +144,12 @@ export default function PublishDialog({ open, onOpenChange }) {
           <Input value={message} onChange={(e) => setMessage(e.target.value)} />
         </Field>
 
-        <div className="flex items-center justify-between border-t border-white/10 pt-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--admin-border)] pt-4">
           <Button variant="outline" size="sm" onClick={downloadJson}>
             <Download className="h-3.5 w-3.5" /> Export JSON
           </Button>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => handleOpenChange(false)}>Cancel</Button>
             <Button variant="accent" onClick={publish} disabled={busy || diff.length === 0}>
               <Upload className="h-3.5 w-3.5" />
               {busy ? 'Publishing…' : 'Publish to GitHub'}

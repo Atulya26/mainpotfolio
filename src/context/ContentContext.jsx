@@ -45,6 +45,36 @@ function deepMergeDefaults(draft, defaults) {
   return out
 }
 
+function normalizeThemeAccent(next) {
+  const accent = next?.theme?.accent?.toLowerCase?.()
+  if (!next?.theme) return next
+  if (accent && !['#c4653b', '#e28457'].includes(accent)) return next
+  return {
+    ...next,
+    theme: {
+      ...next.theme,
+      accent: '#ff5e1a',
+    },
+  }
+}
+
+function normalizeHero(next) {
+  if (!next?.hero) return next
+  const metaRight = next.hero.metaRight?.trim?.().toLowerCase?.()
+  if (metaRight && !['folio / 2026', 'folio/2026'].includes(metaRight)) return next
+  return {
+    ...next,
+    hero: {
+      ...next.hero,
+      metaRight: '',
+    },
+  }
+}
+
+function normalizeContent(next) {
+  return normalizeHero(normalizeThemeAccent(next))
+}
+
 export function ContentProvider({ children }) {
   const [content, setContent] = useState(null)
   const [publishedContent, setPublishedContent] = useState(null) // last-known server state
@@ -58,7 +88,7 @@ export function ContentProvider({ children }) {
     async function load() {
       try {
         const res = await fetch('/content.json', { cache: 'no-store' })
-        const server = await res.json()
+        const server = normalizeContent(await res.json())
         const stored = localStorage.getItem(LS_KEY)
         if (cancelled) return
         if (stored) {
@@ -66,7 +96,7 @@ export function ContentProvider({ children }) {
             const parsed = JSON.parse(stored)
             // Merge server defaults under the draft — fills in any new keys
             // added to content.json since the draft was saved.
-            const merged = deepMergeDefaults(parsed, server)
+            const merged = normalizeContent(deepMergeDefaults(parsed, server))
             setContent(merged)
             setDirty(localStorage.getItem(LS_DIRTY) === '1')
           } catch {

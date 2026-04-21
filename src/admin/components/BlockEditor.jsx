@@ -31,6 +31,11 @@ const ICONS = {
   divider: Minus,
 }
 
+function duplicateId() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID().slice(0, 8)
+  return `copy-${Date.now().toString(36)}`
+}
+
 // A compact preview summary shown in the block header when collapsed.
 function previewFor(block) {
   switch (block.type) {
@@ -50,7 +55,7 @@ function previewFor(block) {
   }
 }
 
-function BlockCard({ block, onChange, onDelete, onDuplicate, onInsertAfter }) {
+function BlockCard({ block, onChange, onDelete, onDuplicate }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: block.id })
   const [open, setOpen] = useState(true)
   const Icon = ICONS[block.type] || Type
@@ -68,47 +73,47 @@ function BlockCard({ block, onChange, onDelete, onDuplicate, onInsertAfter }) {
     <div
       ref={setNodeRef}
       style={style}
-      className="rounded-lg border border-white/10 bg-white/[0.03] overflow-hidden"
+      className="overflow-hidden rounded-[24px] border border-[var(--admin-border)] bg-[var(--admin-panel)] shadow-[var(--admin-shadow)]"
     >
-      <div className="flex items-center gap-2 border-b border-white/5 px-2 py-1.5">
+      <div className="flex items-center gap-2 border-b border-[var(--admin-border)] px-3 py-2">
         <button
           {...attributes}
           {...listeners}
-          className="flex h-7 w-7 cursor-grab items-center justify-center rounded-md text-white/30 hover:bg-white/5 hover:text-white/60 active:cursor-grabbing"
+          className="flex h-9 w-9 cursor-grab items-center justify-center rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-panel-muted)] text-[var(--admin-subtle)] transition-[background-color,color,border-color,transform] duration-200 hover:border-[var(--admin-border-strong)] hover:bg-[var(--admin-panel-strong)] hover:text-white active:scale-[0.96] active:cursor-grabbing"
           title="Drag"
         >
           <GripVertical className="h-3.5 w-3.5" />
         </button>
         <button
           onClick={() => setOpen((v) => !v)}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-white/40 hover:bg-white/5 hover:text-white/70"
+          className="flex h-9 w-9 items-center justify-center rounded-2xl border border-transparent text-[var(--admin-subtle)] transition-[background-color,color,border-color,transform] duration-200 hover:border-[var(--admin-border)] hover:bg-[var(--admin-panel-muted)] hover:text-white active:scale-[0.96]"
           title={open ? 'Collapse' : 'Expand'}
         >
           {open ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
         </button>
 
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white/5 shrink-0">
-            <Icon className="h-3 w-3 text-white/60" />
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl border border-[var(--admin-border)] bg-white/[0.04]">
+            <Icon className="h-3.5 w-3.5 text-[var(--admin-muted)]" />
           </span>
-          <span className="text-[10px] uppercase tracking-wider text-white/40 mono-font shrink-0">
+          <span className="mono-font shrink-0 text-[10px] uppercase tracking-[0.12em] text-[var(--admin-subtle)]">
             {BLOCK_LABELS[block.type]}
           </span>
           {!open && preview && (
-            <span className="truncate text-xs text-white/60">{preview}</span>
+            <span className="truncate text-sm text-[var(--admin-muted)]">{preview}</span>
           )}
         </div>
 
         <div className="flex items-center gap-1 shrink-0">
           <button
-            className="flex h-7 w-7 items-center justify-center rounded-md text-white/40 hover:bg-white/5 hover:text-white"
+            className="flex h-9 w-9 items-center justify-center rounded-2xl text-[var(--admin-subtle)] transition-colors hover:bg-white/6 hover:text-white"
             onClick={onDuplicate}
             title="Duplicate"
           >
             <Copy className="h-3.5 w-3.5" />
           </button>
           <button
-            className="flex h-7 w-7 items-center justify-center rounded-md text-red-400/70 hover:bg-red-500/10 hover:text-red-400"
+            className="flex h-9 w-9 items-center justify-center rounded-2xl text-red-400/70 transition-colors hover:bg-red-500/10 hover:text-red-400"
             onClick={onDelete}
             title="Delete"
           >
@@ -118,8 +123,8 @@ function BlockCard({ block, onChange, onDelete, onDuplicate, onInsertAfter }) {
       </div>
 
       {open && (
-        <div className="p-4">
-          {Editor ? <Editor block={block} onChange={onChange} /> : <p className="text-xs text-white/40">No editor.</p>}
+        <div className="p-5">
+          {Editor ? <Editor block={block} onChange={onChange} /> : <p className="text-xs text-[var(--admin-subtle)]">No editor.</p>}
         </div>
       )}
     </div>
@@ -128,11 +133,11 @@ function BlockCard({ block, onChange, onDelete, onDuplicate, onInsertAfter }) {
 
 function InsertRail({ onPick }) {
   return (
-    <div className="group relative -my-1 h-6">
-      <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+    <div className="relative my-1 flex h-10 items-center justify-center">
+      <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-[var(--admin-border)] to-transparent" />
       <button
         onClick={onPick}
-        className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border border-white/20 bg-[#14141a] px-3 py-1 text-[10px] uppercase tracking-wider text-white/70 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-white/10 mono-font"
+        className="relative z-10 inline-flex items-center gap-1 rounded-full border border-[var(--admin-border)] bg-[rgba(12,14,18,0.96)] px-3 py-1.5 text-[10px] uppercase tracking-[0.12em] text-[var(--admin-muted)] shadow-[var(--admin-shadow)] transition-[background-color,color,border-color,transform] duration-200 hover:border-[var(--admin-border-strong)] hover:bg-[var(--admin-panel)] hover:text-white active:scale-[0.96] mono-font"
       >
         <Plus className="h-3 w-3" /> Add block
       </button>
@@ -167,7 +172,7 @@ export default function BlockEditor({ blocks, onChange }) {
     const idx = blocks.findIndex((b) => b.id === id)
     if (idx < 0) return
     const original = blocks[idx]
-    const copy = { ...structuredClone(original), id: Math.random().toString(36).slice(2, 10) }
+    const copy = { ...structuredClone(original), id: duplicateId() }
     const next = [...blocks.slice(0, idx + 1), copy, ...blocks.slice(idx + 1)]
     onChange(next)
   }
@@ -192,7 +197,7 @@ export default function BlockEditor({ blocks, onChange }) {
         <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-2">
             {blocks.length === 0 && (
-              <div className="rounded-lg border border-dashed border-white/10 p-12 text-center text-white/40">
+              <div className="rounded-[24px] border border-dashed border-[var(--admin-border)] bg-[var(--admin-panel-muted)] p-12 text-center text-[var(--admin-muted)]">
                 <p className="mb-3">No blocks yet — your case study body is empty.</p>
                 <Button variant="accent" onClick={() => openPicker(null)}>
                   <Plus className="h-3.5 w-3.5" /> Add your first block

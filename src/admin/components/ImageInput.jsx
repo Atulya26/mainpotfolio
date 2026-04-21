@@ -15,7 +15,7 @@ export default function ImageInput({ value, onChange, aspect = '16/10' }) {
   return (
     <div className="flex flex-col gap-2">
       <div
-        className="relative flex items-center justify-center rounded-md border border-dashed border-white/15 bg-white/[0.02] overflow-hidden"
+        className="relative flex items-center justify-center overflow-hidden rounded-[20px] border border-dashed border-[var(--admin-border)] bg-[var(--admin-panel-muted)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
         style={{ aspectRatio: aspect }}
       >
         {value ? (
@@ -23,7 +23,7 @@ export default function ImageInput({ value, onChange, aspect = '16/10' }) {
             <img src={value} alt="" className="h-full w-full object-cover" />
             <button
               onClick={() => onChange('')}
-              className="absolute right-2 top-2 rounded-md bg-black/60 p-1 text-white opacity-0 transition-opacity hover:opacity-100 group-hover:opacity-100"
+              className="absolute right-3 top-3 rounded-xl border border-white/10 bg-black/55 p-1.5 text-white transition-[background-color,transform] duration-200 hover:bg-black/75 active:scale-[0.96]"
               style={{ opacity: 0.9 }}
               title="Clear"
             >
@@ -31,7 +31,7 @@ export default function ImageInput({ value, onChange, aspect = '16/10' }) {
             </button>
           </>
         ) : (
-          <div className="flex flex-col items-center gap-2 p-4 text-white/40">
+          <div className="flex flex-col items-center gap-2 p-4 text-[var(--admin-muted)]">
             <ImageIcon className="h-6 w-6" />
             <p className="text-xs">Paste image URL or upload</p>
           </div>
@@ -61,7 +61,7 @@ export default function ImageInput({ value, onChange, aspect = '16/10' }) {
         </Button>
       </div>
       {value?.startsWith('data:') && (
-        <p className="text-[10px] text-amber-400/80">
+        <p className="text-[10px] text-amber-300/80">
           Local upload preview. For publishing, use a hosted URL (CDN, Unsplash, Cloudinary).
         </p>
       )}

@@ -4,11 +4,33 @@
    Admin panel root has .admin-root — everything inside uses Tailwind. */
 
 .admin-root {
-  font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
-  background: #0b0b0d;
-  color: #e8e6e1;
+  --admin-bg: #090a0d;
+  --admin-bg-elevated: rgba(12, 14, 18, 0.84);
+  --admin-panel: rgba(255, 255, 255, 0.045);
+  --admin-panel-strong: rgba(255, 255, 255, 0.072);
+  --admin-panel-muted: rgba(255, 255, 255, 0.03);
+  --admin-border: rgba(255, 255, 255, 0.09);
+  --admin-border-strong: rgba(255, 255, 255, 0.14);
+  --admin-muted: rgba(245, 240, 232, 0.68);
+  --admin-subtle: rgba(245, 240, 232, 0.42);
+  --admin-ink: #f5f0e8;
+  --admin-accent: #ff5e1a;
+  --admin-accent-strong: #ff7b45;
+  --admin-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 18px 48px rgba(0, 0, 0, 0.24);
+  --admin-shadow-strong:
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 24px 64px rgba(0, 0, 0, 0.32);
+  font-family: var(--font-sans, 'Schibsted Grotesk', system-ui, -apple-system, sans-serif);
+  background:
+    radial-gradient(circle at top left, rgba(217, 116, 71, 0.17), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.05), transparent 24%),
+    var(--admin-bg);
+  color: var(--admin-ink);
   min-height: 100vh;
   cursor: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
 .admin-root *, .admin-root *::before, .admin-root *::after {
@@ -22,13 +44,23 @@
   font-family: inherit;
 }
 
+.admin-root ::selection {
+  background: color-mix(in srgb, var(--admin-accent) 75%, white 10%);
+  color: white;
+}
+
+.admin-root button {
+  cursor: pointer !important;
+}
+
 /* Admin uses Tailwind class utilities — the selectors below avoid clashes
    with the portfolio's CSS class-heavy styles by only applying inside .admin-root. */
 
 .admin-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
-.admin-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 8px; }
+.admin-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
 .admin-scroll::-webkit-scrollbar-track { background: transparent; }
 
 .admin-root .mono-font {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-variant-numeric: tabular-nums;
 }

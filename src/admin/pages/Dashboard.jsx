@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useContent } from '../../context/ContentContext.jsx'
 import PageHeader from '../components/PageHeader.jsx'
-import { Card, CardHeader, CardTitle, CardDescription, Button, toast } from '../components/ui.jsx'
+import { Card, CardHeader, CardTitle, CardDescription, Button, Badge, toast } from '../components/ui.jsx'
 import { Upload, FileText, Briefcase, Archive as ArchiveIcon, BookOpen, Zap, RefreshCw, Download, Upload as UploadIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -50,38 +50,41 @@ export default function Dashboard() {
       <PageHeader
         eyebrow="Overview"
         title="Dashboard"
-        description="A bird's-eye view of your content and what's waiting to publish."
+        description="A bird's-eye view of your content, draft state, and the sections you’ll touch most often."
       />
 
-      <div className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {stats.map((s) => (
           <Link
             key={s.label}
             to={s.to}
-            className="group rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:bg-white/[0.06]"
+            className="group rounded-[24px] border border-[var(--admin-border)] bg-[var(--admin-panel)] p-5 shadow-[var(--admin-shadow)] transition-[transform,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-[var(--admin-border-strong)] hover:bg-[var(--admin-panel-strong)]"
           >
-            <div className="flex items-center gap-2 text-white/40 mb-3">
-              <s.icon className="h-3.5 w-3.5" />
-              <p className="text-[10px] uppercase tracking-wider mono-font">{s.label}</p>
+            <div className="mb-4 flex items-center gap-2 text-[var(--admin-subtle)]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--admin-border)] bg-white/[0.04]">
+                <s.icon className="h-4 w-4" />
+              </div>
+              <p className="mono-font text-[10px] uppercase tracking-[0.12em]">{s.label}</p>
             </div>
-            <p className="text-3xl font-medium text-white">{s.value}</p>
+            <p className="text-4xl font-medium tracking-[-0.04em] text-white">{s.value}</p>
           </Link>
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 mb-8">
+      <div className="mb-8 grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <Card className={dirty ? 'border-[#ff4a1c]/30 bg-[#ff4a1c]/5' : ''}>
           <CardHeader>
-            <CardTitle>
-              {dirty ? 'You have unpublished changes' : 'Everything is published'}
-            </CardTitle>
+            <div className="flex flex-wrap items-center gap-2">
+              <CardTitle>{dirty ? 'You have unpublished changes' : 'Everything is published'}</CardTitle>
+              {dirty ? <Badge variant="accent">Draft active</Badge> : <Badge>Synced</Badge>}
+            </div>
             <CardDescription>
               {dirty
                 ? 'Review and publish when you\'re ready. Changes live in your browser until then.'
                 : 'Your site and draft match the last published state.'}
             </CardDescription>
           </CardHeader>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button variant={dirty ? 'accent' : 'secondary'} onClick={() => window.dispatchEvent(new CustomEvent('admin:open-publish'))}>
               <Upload className="h-3.5 w-3.5" /> Publish
             </Button>
@@ -109,7 +112,7 @@ export default function Dashboard() {
             </Button>
             <label className="inline-flex">
               <input type="file" accept="application/json" className="hidden" onChange={importJson} />
-              <span className="inline-flex items-center gap-2 h-9 px-4 text-sm rounded-md border border-white/20 text-white cursor-pointer hover:bg-white/10 transition-colors">
+              <span className="inline-flex h-10 items-center gap-2 rounded-xl border border-[var(--admin-border-strong)] px-4 text-sm text-white shadow-[var(--admin-shadow)] transition-[background-color,border-color,transform] duration-200 hover:bg-white/5 active:scale-[0.98]">
                 <UploadIcon className="h-3.5 w-3.5" /> {importing ? 'Importing…' : 'Import JSON'}
               </span>
             </label>

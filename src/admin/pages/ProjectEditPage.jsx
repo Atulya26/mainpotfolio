@@ -85,10 +85,10 @@ export default function ProjectEditPage() {
               <Textarea rows={2} autoGrow value={p.summary} onChange={(e) => setField('summary', e.target.value)} />
             </Field>
             <div className="md:col-span-2">
-              <p className="mb-2 text-[10px] uppercase tracking-wider text-white/50 mono-font">Roles</p>
+              <p className="mono-font mb-2 text-[10px] uppercase tracking-[0.12em] text-[var(--admin-subtle)]">Roles</p>
               <div className="flex flex-wrap gap-2">
                 {p.role.map((r, i) => (
-                  <div key={i} className="flex items-center gap-1 rounded-md border border-white/10 bg-white/[0.03] p-1">
+                  <div key={i} className="flex items-center gap-1 rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-panel-muted)] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                     <Input
                       value={r}
                       onChange={(e) => {
@@ -96,11 +96,11 @@ export default function ProjectEditPage() {
                         next[i] = e.target.value
                         setField('role', next)
                       }}
-                      className="h-7 w-40 border-0 bg-transparent"
+                      className="h-8 w-40 border-0 bg-transparent px-3 shadow-none focus-visible:bg-transparent focus-visible:ring-0"
                     />
                     <button
                       onClick={() => setField('role', p.role.filter((_, j) => j !== i))}
-                      className="flex h-6 w-6 items-center justify-center text-white/40 hover:text-white"
+                      className="flex h-8 w-8 items-center justify-center rounded-xl text-[var(--admin-subtle)] transition-colors hover:bg-white/6 hover:text-white"
                     >
                       <Trash2 className="h-3 w-3" />
                     </button>
@@ -130,17 +130,17 @@ export default function ProjectEditPage() {
                 <Field label="Text on color"><ColorInput value={p.textOnColor} onChange={(v) => setField('textOnColor', v)} /></Field>
               </div>
             </div>
-            <div className="rounded-lg border border-white/10 overflow-hidden">
+            <div className="overflow-hidden rounded-[24px] border border-[var(--admin-border)] bg-[var(--admin-panel)] shadow-[var(--admin-shadow)]">
               <div className="relative" style={{ background: p.color, aspectRatio: '16/10' }}>
                 <img src={p.cover} alt="" className="h-full w-full object-cover" />
                 <span
-                  className="absolute top-3 left-3 text-[10px] uppercase tracking-wider px-2 py-1 rounded-full border border-white/20 mono-font"
+                  className="mono-font absolute left-3 top-3 rounded-full border border-white/20 px-2.5 py-1 text-[10px] uppercase tracking-[0.12em]"
                   style={{ color: p.textOnColor, background: 'rgba(255,255,255,0.15)' }}
                 >
                   {p.discipline}
                 </span>
               </div>
-              <div className="p-3 text-xs text-white/50">Card preview</div>
+              <div className="p-3 text-xs text-[var(--admin-muted)]">Card preview</div>
             </div>
           </div>
         </Card>

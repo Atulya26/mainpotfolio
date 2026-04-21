@@ -42,9 +42,9 @@ export default function AdminAuth({ onUnlock }) {
 
   return (
     <div className="admin-root flex min-h-screen items-center justify-center p-6">
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-md p-7">
         <CardHeader>
-          <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
+          <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-panel-muted)]">
             <Lock className="h-5 w-5 text-white" />
           </div>
           <CardTitle>{needsSetup ? 'Set up admin' : 'Admin login'}</CardTitle>
@@ -79,7 +79,7 @@ export default function AdminAuth({ onUnlock }) {
             {needsSetup ? 'Create & unlock' : 'Unlock'}
           </Button>
           {!needsSetup && (
-            <p className="text-center text-[11px] text-white/40">
+            <p className="text-center text-[11px] leading-5 text-[var(--admin-subtle)]">
               Forgot it? Clear <span className="mono-font">portfolio:admin-pw</span> in localStorage.
             </p>
           )}

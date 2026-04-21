@@ -12,8 +12,6 @@ export default function Nav({ theme, onToggleTheme }) {
   const [time, setTime] = useState('')
   const location = useLocation()
 
-  useEffect(() => setOpen(false), [location.pathname])
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
@@ -81,7 +79,7 @@ export default function Nav({ theme, onToggleTheme }) {
           </button>
         </div>
       </header>
-      <MenuModal open={open} onClose={() => setOpen(false)} />
+      <MenuModal key={location.pathname} open={open} onClose={() => setOpen(false)} />
     </>
   )
 }

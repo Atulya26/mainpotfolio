@@ -18,23 +18,23 @@
       { "label": "Read.cv ↗", "url": "#" },
       { "label": "Are.na ↗", "url": "#" }
     ],
-    "colophon": "Built with React, GSAP, Lenis. Type in Inter Tight & Instrument Serif.",
+    "colophon": "Built with React, GSAP, Lenis. Type set in Schibsted Grotesk, Instrument Serif and JetBrains Mono.",
     "copyright": "© 2026 Atulya",
     "rights": "All projects, unless noted, © their respective owners.",
     "version": "v. 0.1"
   },
 
   "theme": {
-    "accent": "#ff4a1c",
-    "bgLight": "#efece6",
-    "bgAltLight": "#e8e5de",
-    "fgLight": "#17181a",
-    "fgMutedLight": "#6a6a6a",
-    "bgDark": "#0e0e0f",
-    "bgAltDark": "#141416",
-    "fgDark": "#f2efe8",
-    "fgMutedDark": "#9a9a9a",
-    "fontDisplay": "Inter Tight",
+    "accent": "#ff5e1a",
+    "bgLight": "#f6f1e8",
+    "bgAltLight": "#ece4d7",
+    "fgLight": "#151311",
+    "fgMutedLight": "#6d645b",
+    "bgDark": "#12100f",
+    "bgAltDark": "#1b1817",
+    "fgDark": "#f4ede2",
+    "fgMutedDark": "#aea294",
+    "fontDisplay": "Schibsted Grotesk",
     "fontSerif": "Instrument Serif",
     "fontMono": "JetBrains Mono"
   },
@@ -61,12 +61,16 @@
 
   "hero": {
     "metaLeft": "Atulya — Product & Interaction Designer",
-    "metaRight": "Folio / 2026",
+    "metaRight": "",
     "titleLines": [
       "Designing interfaces",
       "with clarity, craft,",
       "and a little restraint."
     ],
+    "showcaseEyebrow": "Selected UI showcase",
+    "showcaseIntro": "A horizontal reel of interface studies, systems work, and product screens. Scroll through the cards and head to the full external showcase at the end.",
+    "showcaseCtaLabel": "Full external showcase",
+    "showcaseUrl": "#",
     "mediaSrc": "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?w=1600&q=80&auto=format&fit=crop",
     "mediaTag": "REEL · 02:14",
     "asideLede": "Independent designer working between product, brand and interaction. Previously at studios you might know, now shipping small honest things from Copenhagen.",

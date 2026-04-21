@@ -20,14 +20,14 @@ function SortableItem({ id, children, className }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.55 : 1,
   }
   return (
     <div ref={setNodeRef} style={style} className={className}>
       <div className="flex items-stretch gap-2">
         <button
           type="button"
-          className="flex cursor-grab items-center justify-center rounded-md px-1 text-white/30 hover:bg-white/5 hover:text-white/60 active:cursor-grabbing"
+          className="mt-1 flex h-10 w-10 cursor-grab items-center justify-center rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-panel-muted)] text-[var(--admin-subtle)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background-color,color,border-color,transform] duration-200 hover:border-[var(--admin-border-strong)] hover:bg-[var(--admin-panel)] hover:text-white active:scale-[0.96] active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >
